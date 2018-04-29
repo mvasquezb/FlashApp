@@ -32,8 +32,15 @@
         </activity>
         <activity
             android:name=".view.UserSelectionActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.CustomerMainActivity"
+            android:label="@string/title_activity_customer_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.SitterMainActivity"
+            android:label="@string/title_activity_sitter_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

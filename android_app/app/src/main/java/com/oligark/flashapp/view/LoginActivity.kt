@@ -30,6 +30,10 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         binding.setVariable(BR.viewModel, viewModel)
 
+        initView()
+    }
+
+    private fun initView() {
         viewModel.loginStatus.observe(this, Observer { status ->
             when (status) {
                 LoginViewModel.LoginStatus.LOADING -> binding.loginProgress.visibility = View.VISIBLE
@@ -57,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
     }
 
 }

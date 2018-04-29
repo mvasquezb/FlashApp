@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "Login success")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
                 else -> {
                     Log.d(TAG, "Login else")

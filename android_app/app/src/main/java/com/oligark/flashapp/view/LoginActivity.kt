@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 LoginViewModel.LoginStatus.SUCCESS -> {
                     Log.d(TAG, "Login success")
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, UserSelectionActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

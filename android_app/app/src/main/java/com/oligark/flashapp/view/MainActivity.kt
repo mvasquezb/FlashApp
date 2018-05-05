@@ -1,7 +1,8 @@
-package com.oligark.flashapp
+package com.oligark.flashapp.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.oligark.flashapp.R
 
 class MainActivity : AppCompatActivity() {
 

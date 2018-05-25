@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_mascota">
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@color/cardview_light_background"
+        app:srcCompat="@drawable/ic_menu_camera"
+        tools:layout_editor_absoluteX="306dp"
+        tools:layout_editor_absoluteY="453dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="165dp"
+        android:layout_height="153dp"
+        app:srcCompat="@drawable/logo"
+        tools:layout_editor_absoluteX="110dp"
+        tools:layout_editor_absoluteY="288dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="212dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="NOMBRE"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="44dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="ANIMAL"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="102dp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="RAZA"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="169dp" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="SEXO"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="232dp" />
+</android.support.constraint.ConstraintLayout>

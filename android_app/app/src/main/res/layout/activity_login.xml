@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.LoginActivity">
     <data>
@@ -43,13 +44,13 @@
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/app_logo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                fresco:placeholderImage="@drawable/logo"
-                android:layout_gravity="center_horizontal"
-                fresco:roundAsCircle="true" />
+            <!--<com.facebook.drawee.view.SimpleDraweeView-->
+                <!--android:id="@+id/app_logo"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="150dp"-->
+                <!--fresco:placeholderImage="@drawable/logo"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--fresco:roundAsCircle="true" />-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,6 +60,7 @@
                 android:textStyle="bold|italic"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
                 android:layout_marginBottom="20dp" />
 
             <android.support.design.widget.TextInputLayout
@@ -96,16 +98,52 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/email_login_button"
-                android:textColor="@android:color/white"
-                android:background="@drawable/purple_ripple"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:onClick="@{() -> viewModel.onLogin(LoginType.EMAIL)}"/>
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/email_login_button"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/purple_ripple"
+                    android:layout_width="194dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_sign_in"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:onClick="@{() -> viewModel.onLogin(LoginType.EMAIL)}"/>
+
+                <com.shobhitpuri.custombuttons.GoogleSignInButton
+                    android:id="@+id/google_login_button"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/purple_ripple"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="12dp"
+                    android:padding="0dp"
+                    android:text="@string/action_google_sign_in"
+                    android:textStyle="bold"
+                    android:onClick="@{() -> viewModel.onLogin(LoginType.GOOGLE)}"/>
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_button"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/purple_ripple"
+                    android:layout_width="193dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="12dp"
+                    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+                    facebook:com_facebook_login_text="@string/action_fb_sign_in"
+                    android:textStyle="bold"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:onClick="@{() -> viewModel.onLogin(LoginType.FB)}"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

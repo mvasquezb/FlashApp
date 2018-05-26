@@ -2,6 +2,11 @@
 <resources>
     <string name="app_name">FlashApp</string>
 
+    <!-- Keys -->
+    <string name="facebook_app_id">135887747283319</string>
+    <string name="fb_login_protocol_scheme">fb135887747283319</string>
+
+
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Ingresar</string>

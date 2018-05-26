@@ -2,7 +2,7 @@ package com.oligark.flashapp.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,20 +21,38 @@ import com.oligark.flashapp.viewmodel.PetListViewModel;
 import java.util.List;
 
 public class PetListFragment extends Fragment {
+    public static final String TAG = PetListFragment.class.getSimpleName();
+
     RecyclerView listaDatos;
     PetListAdapter petListAdapter;
     RecyclerView.LayoutManager petListViewManager;
     private FloatingActionButton addPetFab;
     private PetListViewModel viewModel;
+    private PetListCallback mCallback;
 
     public PetListFragment() {
         // Required empty public constructor
+    }
+
+    public interface PetListCallback {
+        void addPetButtonClick();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(PetListViewModel.class);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (PetListCallback) context;
+        } catch (ClassCastException ex) {
+            //
+        }
     }
 
     @Override
@@ -58,8 +76,9 @@ public class PetListFragment extends Fragment {
         addPetFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NewPetActivity.class);
-                startActivity(intent);
+                if (mCallback != null) {
+                    mCallback.addPetButtonClick();
+                }
             }
         });
         return rootView;

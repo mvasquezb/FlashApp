@@ -23,7 +23,7 @@
         android:layout_height="153dp"
         app:srcCompat="@drawable/logo"
         tools:layout_editor_absoluteX="110dp"
-        tools:layout_editor_absoluteY="288dp" />
+        tools:layout_editor_absoluteY="300dp" />
 
     <EditText
         android:id="@+id/editText"

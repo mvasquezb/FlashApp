@@ -42,7 +42,8 @@
             android:label="@string/title_activity_sitter_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".mascotas" />
-        <activity android:name=".add_mascota"></activity>
+        <activity android:name=".add_mascota"
+            android:label="Registrar Mascota"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.oligark.flashapp.service.api
 
+import com.oligark.flashapp.model.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -10,5 +11,8 @@ interface UserService {
     fun loginUser(@Body body: LoginRequest): Call<LoginResponse>
 
     @GET("/users")
-    fun findAll(): Call
+    fun findAll(): Call<List<User>>
+
+    @GET("/users/{id}")
+    fun findById(id: Int): Call<User?>
 }

@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
 import kotlinx.android.synthetic.main.activity_customer_main.*
@@ -38,6 +39,8 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         } else {
             super.onBackPressed()
         }
+    }
+    fun onClickService(v: View){
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

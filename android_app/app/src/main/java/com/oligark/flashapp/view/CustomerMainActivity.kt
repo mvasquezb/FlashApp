@@ -61,8 +61,12 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 // Handle the camera action
             }
             R.id.nav_pets -> {
-                val intent = Intent(this, PetListActivity::class.java)
-                startActivity(intent)
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.customerContent, PetListFragment())
+                        .addToBackStack("Mascotas")
+                        .commit()
+//                val intent = Intent(this, PetListActivity::class.java)
+//                startActivity(intent)
             }
             R.id.nav_slideshow -> {
 

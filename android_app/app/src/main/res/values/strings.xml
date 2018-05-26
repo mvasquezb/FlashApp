@@ -30,4 +30,5 @@
     <string name="customer_pets_menu_item">Mascotas</string>
     <string name="preferences_menu_item">Preferencias</string>
     <string name="user_option_not_available">Opción aún no disponible</string>
+    <string name="customer_history_menu_item">Historial</string>
 </resources>

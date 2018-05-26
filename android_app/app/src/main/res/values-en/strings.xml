@@ -22,4 +22,7 @@
     <string name="title_activity_sitter_main">SitterMainActivity</string>
     <string name="title_activity_add_mascota">Add Pet</string>
     <string name="user_option_not_available">Not available at this time</string>
+    <string name="customer_pets_menu_item">Pets</string>
+    <string name="preferences_menu_item">Preferences</string>
+    <string name="customer_history_menu_item">History</string>
 </resources>

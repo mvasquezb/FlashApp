@@ -1,8 +1,8 @@
 package com.oligark.flashapp.view
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -11,8 +11,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
-import kotlinx.android.synthetic.main.activity_customer_main.*
-import kotlinx.android.synthetic.main.app_bar_customer_main.*
 
 class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,8 +60,9 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             R.id.nav_camera -> {
                 // Handle the camera action
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_pets -> {
+                val intent = Intent(this, PetListActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_slideshow -> {
 

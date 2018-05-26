@@ -1,28 +1,28 @@
-package com.oligark.flashapp;
+package com.oligark.flashapp.model;
 
-public class mascota {
+public class Pet {
     private int id;
     private String nombre;
     private String animal;
     private String raza;
     private String sexo;
+    private String imageUrl;
 
-    public mascota(String nombre, String animal, String raza, String sexo, String image_url) {
+
+    public Pet(String nombre, String animal, String raza, String sexo, String imageUrl) {
         this.nombre = nombre;
         this.animal = animal;
         this.raza = raza;
         this.sexo = sexo;
-        this.image_url = image_url;
+        this.imageUrl = imageUrl;
     }
-
     public int getId(){
         return id;
     }
-    public mascota(String nombre) {
+
+    public Pet(String nombre) {
         this.nombre = nombre;
     }
-
-    private String image_url;
 
     public String getNombre() {
         return nombre;
@@ -56,11 +56,11 @@ public class mascota {
         this.sexo = sexo;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

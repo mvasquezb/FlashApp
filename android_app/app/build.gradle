@@ -41,6 +41,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
     implementation "com.facebook.fresco:fresco:1.9.0"
     implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+    implementation 'com.facebook.android:facebook-login:4.33.0'
 
     testImplementation "junit:junit:4.12"
 

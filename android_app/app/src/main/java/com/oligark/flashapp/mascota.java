@@ -1,7 +1,6 @@
 package com.oligark.flashapp;
 
 public class mascota {
-    private static int id_gen=0;
     private int id;
     private String nombre;
     private String animal;
@@ -9,7 +8,6 @@ public class mascota {
     private String sexo;
 
     public mascota(String nombre, String animal, String raza, String sexo, String image_url) {
-        this.id = id_gen++;
         this.nombre = nombre;
         this.animal = animal;
         this.raza = raza;

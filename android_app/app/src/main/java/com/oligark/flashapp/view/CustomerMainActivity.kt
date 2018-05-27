@@ -11,12 +11,17 @@ import android.view.Menu
 import android.view.MenuItem
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import kotlinx.android.synthetic.main.activity_customer_main.*
 import kotlinx.android.synthetic.main.app_bar_customer_main.*
 
 class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityCustomerMainBinding
+    var fragment: Fragment? = null
+    var fm = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

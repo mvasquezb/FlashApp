@@ -56,7 +56,7 @@ class SitterMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_history -> {
                 // Handle the camera action
             }
             R.id.nav_pets -> {

@@ -25,4 +25,5 @@
     <string name="customer_pets_menu_item">Pets</string>
     <string name="preferences_menu_item">Preferences</string>
     <string name="customer_history_menu_item">History</string>
+    <string name="home_menu_item">Home</string>
 </resources>

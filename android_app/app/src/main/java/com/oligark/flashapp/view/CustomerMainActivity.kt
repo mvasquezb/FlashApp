@@ -14,16 +14,19 @@ import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
 
 class CustomerMainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
-        PetListFragment.PetListCallback {
+        PetListFragment.PetListCallback,
+        CustomerHomeFragment.CustomerHomeCallback {
 
     private lateinit var binding: ActivityCustomerMainBinding
+    var fragment: Fragment? = null
+    var fm = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_customer_main)
         setSupportActionBar(binding.appBar.toolbar)
 
-        replaceFragment(PetListFragment())
+        replaceFragment(CustomerHomeFragment())
 
         val toggle = ActionBarDrawerToggle(
                 this,
@@ -64,8 +67,11 @@ class CustomerMainActivity : AppCompatActivity(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
+            R.id.nav_home -> {
+                replaceFragment(CustomerHomeFragment())
+            }
+            R.id.nav_history -> {
+                replaceFragment(UserHistoryFragment(), addToBackStack = true)
             }
             R.id.nav_pets -> {
                 replaceFragment(PetListFragment(), addToBackStack = true)
@@ -103,5 +109,9 @@ class CustomerMainActivity : AppCompatActivity(),
 
     override fun addPetButtonClick() {
         replaceFragment(NewPetFragment(), addToBackStack = true)
+    }
+
+    override fun onAddServiceClick() {
+        replaceFragment(ServiceDetailFragment(), addToBackStack = true)
     }
 }

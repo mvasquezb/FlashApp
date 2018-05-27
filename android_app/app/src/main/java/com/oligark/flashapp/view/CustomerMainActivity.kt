@@ -23,6 +23,8 @@ class CustomerMainActivity : AppCompatActivity(),
         binding = DataBindingUtil.setContentView(this, R.layout.activity_customer_main)
         setSupportActionBar(binding.appBar.toolbar)
 
+        replaceFragment(PetListFragment())
+
         val toggle = ActionBarDrawerToggle(
                 this,
                 binding.drawerLayout,
@@ -89,7 +91,7 @@ class CustomerMainActivity : AppCompatActivity(),
     }
 
     private fun replaceFragment(fragment: Fragment,
-                                addToBackStack: Boolean = true) {
+                                addToBackStack: Boolean = false) {
         supportFragmentManager.beginTransaction().apply {
 
             replace(R.id.customerContent, fragment)
@@ -100,6 +102,6 @@ class CustomerMainActivity : AppCompatActivity(),
     }
 
     override fun addPetButtonClick() {
-        replaceFragment(NewPetFragment())
+        replaceFragment(NewPetFragment(), addToBackStack = true)
     }
 }

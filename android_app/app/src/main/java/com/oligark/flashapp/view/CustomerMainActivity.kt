@@ -2,8 +2,8 @@ package com.oligark.flashapp.view
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -11,21 +11,29 @@ import android.view.Menu
 import android.view.MenuItem
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
-import kotlinx.android.synthetic.main.activity_customer_main.*
-import kotlinx.android.synthetic.main.app_bar_customer_main.*
 
-class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class CustomerMainActivity : AppCompatActivity(),
+        NavigationView.OnNavigationItemSelectedListener,
+        PetListFragment.PetListCallback,
+        CustomerHomeFragment.CustomerHomeCallback {
 
     private lateinit var binding: ActivityCustomerMainBinding
+    var fragment: Fragment? = null
+    var fm = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_customer_main)
         setSupportActionBar(binding.appBar.toolbar)
 
+        replaceFragment(CustomerHomeFragment())
+
         val toggle = ActionBarDrawerToggle(
-                this, binding.drawerLayout, binding.appBar.toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this,
+                binding.drawerLayout,
+                binding.appBar.toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -60,11 +68,16 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
+            R.id.nav_home -> {
+                replaceFragment(CustomerHomeFragment())
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_history -> {
+                replaceFragment(UserHistoryFragment(), addToBackStack = true)
+            }
+            R.id.nav_pets -> {
+                replaceFragment(PetListFragment(), addToBackStack = true)
+//                val intent = Intent(this, PetListActivity::class.java)
+//                startActivity(intent)
             }
             R.id.nav_slideshow -> {
 
@@ -82,5 +95,24 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun replaceFragment(fragment: Fragment,
+                                addToBackStack: Boolean = false) {
+        supportFragmentManager.beginTransaction().apply {
+
+            replace(R.id.customerContent, fragment)
+            if (addToBackStack) {
+                this.addToBackStack(null)
+            }
+        }.commit()
+    }
+
+    override fun addPetButtonClick() {
+        replaceFragment(NewPetFragment(), addToBackStack = true)
+    }
+
+    override fun onAddServiceClick() {
+        replaceFragment(ServiceDetailFragment(), addToBackStack = true)
     }
 }

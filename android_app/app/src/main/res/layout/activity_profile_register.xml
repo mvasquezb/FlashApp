@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.RegisterActivity">
     <android.support.constraint.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        tools:context=".view.RegisterActivity"
-        <item android:drawable="@drawable/circle"/>
 
-        <ImageView
-            android:id="@+id/sign_img"
-            android:layout_width="98dp"
-            android:layout_height="83dp"
-            android:background="@drawable/beja"
-            app:srcCompat="@drawable/circle"
-            tools:layout_editor_absoluteX="143dp"
-            tools:layout_editor_absoluteY="46dp"
-            tools:ignore="MissingConstraints" />
+        <!--<com.facebook.drawee.view.SimpleDraweeView-->
+            <!--android:id="@+id/sign_img"-->
+            <!--android:layout_width="98dp"-->
+            <!--android:layout_height="83dp"-->
+            <!--fresco:placeholderImage="@drawable/beja"-->
+            <!--fresco:roundAsCircle="true"-->
+            <!--tools:layout_editor_absoluteX="143dp"-->
+            <!--tools:layout_editor_absoluteY="46dp"-->
+            <!--tools:ignore="MissingConstraints" />-->
 
         <EditText
             android:id="@+id/signup_password"

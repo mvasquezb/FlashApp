@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.LoginActivity">
@@ -36,30 +37,30 @@
 
         <LinearLayout
             android:id="@+id/login_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="326dp"
+            android:layout_height="506dp"
             android:orientation="vertical"
-            android:paddingTop="36dp"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp">
+            android:paddingRight="24dp"
+            android:paddingTop="36dp">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/app_logo"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                fresco:placeholderImage="@drawable/logo"
                 android:layout_gravity="center_horizontal"
+                fresco:placeholderImage="@drawable/logo"
                 fresco:roundAsCircle="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="30sp"
-                android:textStyle="bold|italic"
-                android:textColor="@android:color/white"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:text="@string/app_name"
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:textStyle="bold|italic" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -70,10 +71,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
-                    android:text="@={viewModel.email}"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="@={viewModel.email}" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -86,26 +87,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:text="@={viewModel.password}"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_login_short"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="@={viewModel.password}" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/email_login_button"
-                android:textColor="@android:color/white"
-                android:background="@drawable/purple_ripple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/purple_ripple"
+                android:onClick="@{() -> viewModel.onLogin(LoginType.EMAIL)}"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:onClick="@{() -> viewModel.onLogin(LoginType.EMAIL)}"/>
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/purple_ripple"
+                android:text= "Sign Up"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

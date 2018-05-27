@@ -38,6 +38,10 @@
             android:label="@string/title_activity_customer_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".view.RegisterActivity"
+            android:label="RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".view.SitterMainActivity"
             android:label="@string/title_activity_sitter_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>

@@ -41,7 +41,7 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:scrollHorizontally="false"
-            android:text="@string/sitter_selection"
+            android:text="Busco cuidado para mi mascota"
             app:layout_constraintLeft_toRightOf="@+id/divider"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

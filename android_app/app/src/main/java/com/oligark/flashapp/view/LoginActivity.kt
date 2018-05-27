@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo
 import com.oligark.flashapp.BR
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityLoginBinding
+import com.oligark.flashapp.databinding.ActivityProfileRegisterBinding
 import com.oligark.flashapp.viewmodel.LoginViewModel
 
 
@@ -24,12 +25,13 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding =  DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         binding.setVariable(BR.viewModel, viewModel)
-
         initView()
     }
 
@@ -61,6 +63,12 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        binding.registerButton.setOnClickListener { v ->
+            val intent = Intent (this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }

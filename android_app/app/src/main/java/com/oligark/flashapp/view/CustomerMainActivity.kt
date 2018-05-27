@@ -30,6 +30,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         toggle.syncState()
 
         binding.navView.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onBackPressed() {

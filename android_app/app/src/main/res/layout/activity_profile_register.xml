@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        tools:context=".view.RegisterActivity"
+        <item android:drawable="@drawable/circle"/>
+
+        <ImageView
+            android:id="@+id/sign_img"
+            android:layout_width="98dp"
+            android:layout_height="83dp"
+            android:background="@drawable/beja"
+            app:srcCompat="@drawable/circle"
+            tools:layout_editor_absoluteX="143dp"
+            tools:layout_editor_absoluteY="46dp"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/signup_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="246dp" />
+
+        <EditText
+            android:id="@+id/signup_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteX="84dp"
+            tools:layout_editor_absoluteY="179dp" />
+
+        <Button
+            android:id="@+id/action_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/purple_ripple"
+            android:text="Sign Up"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="334dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

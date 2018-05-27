@@ -89,18 +89,17 @@ class CustomerMainActivity : AppCompatActivity(),
     }
 
     private fun replaceFragment(fragment: Fragment,
-                                addToBackStack: Boolean = true,
-                                name: String = "") {
-        supportFragmentManager.beginTransaction().apply{
+                                addToBackStack: Boolean = true) {
+        supportFragmentManager.beginTransaction().apply {
 
             replace(R.id.customerContent, fragment)
             if (addToBackStack) {
-                addToBackStack(name)
+                this.addToBackStack(null)
             }
         }.commit()
     }
 
     override fun addPetButtonClick() {
-        replaceFragment(NewPetFragment(), name = NewPetFragment.TAG)
+        replaceFragment(NewPetFragment())
     }
 }

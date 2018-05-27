@@ -24,6 +24,7 @@ class CustomerMainActivity : AppCompatActivity(),
         setSupportActionBar(binding.appBar.toolbar)
 
         replaceFragment(PetListFragment())
+//        replaceFragment(ServiceDetailFragment())
 
         val toggle = ActionBarDrawerToggle(
                 this,

@@ -28,7 +28,7 @@ public class ServiceDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_service, container, false);
-        final View contentView = getActivity().findViewById(R.id.content);
+        final View contentView = rootView.findViewById(R.id.content);
 
         rootView.post(new Runnable() {
             @Override

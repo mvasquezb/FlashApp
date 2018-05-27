@@ -1,9 +1,9 @@
 package com.oligark.flashapp.view
 
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -12,7 +12,9 @@ import android.view.MenuItem
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
 
-class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class CustomerMainActivity : AppCompatActivity(),
+        NavigationView.OnNavigationItemSelectedListener,
+        PetListFragment.PetListCallback {
 
     private lateinit var binding: ActivityCustomerMainBinding
 
@@ -21,9 +23,14 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         binding = DataBindingUtil.setContentView(this, R.layout.activity_customer_main)
         setSupportActionBar(binding.appBar.toolbar)
 
+        replaceFragment(PetListFragment())
+
         val toggle = ActionBarDrawerToggle(
-                this, binding.drawerLayout, binding.appBar.toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this,
+                binding.drawerLayout,
+                binding.appBar.toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -61,10 +68,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 // Handle the camera action
             }
             R.id.nav_pets -> {
-                supportFragmentManager.beginTransaction()
-                        .add(R.id.customerContent, PetListFragment())
-                        .addToBackStack("Mascotas")
-                        .commit()
+                replaceFragment(PetListFragment(), addToBackStack = true)
 //                val intent = Intent(this, PetListActivity::class.java)
 //                startActivity(intent)
             }
@@ -84,5 +88,20 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun replaceFragment(fragment: Fragment,
+                                addToBackStack: Boolean = false) {
+        supportFragmentManager.beginTransaction().apply {
+
+            replace(R.id.customerContent, fragment)
+            if (addToBackStack) {
+                this.addToBackStack(null)
+            }
+        }.commit()
+    }
+
+    override fun addPetButtonClick() {
+        replaceFragment(NewPetFragment(), addToBackStack = true)
     }
 }

@@ -20,12 +20,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link category.OnFragmentInteractionListener} interface
+ * {@link ServiceCategoryFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link category#newInstance} factory method to
+ * Use the {@link ServiceCategoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class category extends Fragment {
+public class ServiceCategoryFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,9 +40,9 @@ public class category extends Fragment {
     private  CategoryAdapter categoryAdapter;
     private RecyclerView recyclerView;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
 
-    public category() {
+    public ServiceCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -55,8 +55,8 @@ public class category extends Fragment {
      * @return A new instance of fragment category.
      */
     // TODO: Rename and change types and number of parameters
-    public static category newInstance(String param1, String param2) {
-        category fragment = new category();
+    public static ServiceCategoryFragment newInstance(String param1, String param2) {
+        ServiceCategoryFragment fragment = new ServiceCategoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,52 +67,55 @@ public class category extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        categories.add(new CategoryService("Bano", "")  );
-        categories.add(new CategoryService("Paseo", "")  );
-        categories.add(new CategoryService("Peluqueria", "")  );
-        categories.add(new CategoryService("Otros", "")  );
 
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        categoryAdapter = new CategoryAdapter(getContext(), categories);
-        recyclerView.setAdapter(categoryAdapter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_category, container, false);
+        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        rv.setHasFixedSize(true);
+
+        categories = new ArrayList<>();
+        categories.add(new CategoryService("Bano", "")  );
+        categories.add(new CategoryService("Paseo", "")  );
+        categories.add(new CategoryService("Peluqueria", "")  );
+        categories.add(new CategoryService("Otros", "")  );
+
+        CategoryAdapter adapter = new CategoryAdapter(categories);
+        rv.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(llm);
+
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
+//
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        mListener = null;
+//    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -124,8 +127,8 @@ public class category extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 }

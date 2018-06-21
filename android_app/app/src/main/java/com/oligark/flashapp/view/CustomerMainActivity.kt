@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
+import com.oligark.flashapp.model.CategoryService
 
 class CustomerMainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -115,6 +116,8 @@ class CustomerMainActivity : AppCompatActivity(),
     }
 
     override fun onAddServiceClick() {
-        replaceFragment(ServiceDetailFragment(), addToBackStack = true)
+
+        replaceFragment(ServiceCategoryFragment(), addToBackStack = true)
+//        replaceFragment(ServiceDetailFragment(), addToBackStack = true)
     }
 }

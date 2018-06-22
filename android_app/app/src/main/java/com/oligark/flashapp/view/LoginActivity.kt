@@ -13,6 +13,12 @@ import com.oligark.flashapp.BR
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityLoginBinding
 import com.oligark.flashapp.viewmodel.LoginViewModel
+import com.oligark.flashapp.R.id.textView
+import android.widget.TextView
+
+
+
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -53,6 +59,13 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        val txtview = findViewById(R.id.infoTxtCredits) as TextView
+        txtview.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+
         binding.password.setOnEditorActionListener { v, actionId, event ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -62,7 +75,6 @@ class LoginActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
 
 }

@@ -31,7 +31,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         return new PetViewHolder(
                 LayoutInflater
                         .from(parent.getContext())
-                        .inflate(R.layout.layoutlistview, parent, false)
+                        .inflate(R.layout.pet_listapets, parent, false)
         );
     }
 
@@ -49,17 +49,24 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         private final ImageView petImageView;
         private final TextView petNameView;
         private final TextView petBreedView;
+        private final TextView petTipoView;
+        private final TextView petSexoView;
 
         public PetViewHolder(View itemView) {
             super(itemView);
-            petImageView = itemView.findViewById(R.id.petImage);
-            petNameView = itemView.findViewById(R.id.petName);
-            petBreedView = itemView.findViewById(R.id.petBreed);
+            petImageView = itemView.findViewById(R.id.pet_img);
+            petNameView = itemView.findViewById(R.id.pet_name);
+            petBreedView = itemView.findViewById(R.id.pet_raza);
+            petTipoView = itemView.findViewById(R.id.pet_tipo);
+            petSexoView = itemView.findViewById(R.id.pet_sexo);
+
         }
 
         public void bind(Pet pet) {
             petNameView.setText(pet.getNombre());
             petBreedView.setText(pet.getRaza());
+            petTipoView.setText(pet.getAnimal().getDescription());
+            petSexoView.setText(pet.getSexo());
             Picasso.get()
                     .load(pet.getImageUrl())
                     .into(petImageView);

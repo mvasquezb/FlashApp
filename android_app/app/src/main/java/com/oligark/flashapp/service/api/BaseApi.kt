@@ -1,7 +1,7 @@
 package com.oligark.flashapp.service.api
 
-interface BaseApi {
+object BaseApi {
     // TODO: Update when api is created
     val apiUrl: String
-        get() = "https://flashapp-20181.herokuapp.com/api"
+        get() = "http://flashapp.test/api/"
 }

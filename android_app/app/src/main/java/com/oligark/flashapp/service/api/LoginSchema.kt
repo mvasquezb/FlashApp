@@ -15,6 +15,6 @@ data class LoginRequest(
 
 data class LoginResponse(
         val code: Int,
-        val message: String,
+        val message: String? = null,
         val user: User? = null
 )

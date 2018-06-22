@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
 
@@ -46,6 +47,8 @@ class CustomerMainActivity : AppCompatActivity(),
         } else {
             super.onBackPressed()
         }
+    }
+    fun onClickService(v: View){
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -112,6 +115,8 @@ class CustomerMainActivity : AppCompatActivity(),
     }
 
     override fun onAddServiceClick() {
-        replaceFragment(ServiceDetailFragment(), addToBackStack = true)
+
+        replaceFragment(ServiceCategoryFragment(), addToBackStack = true)
+//        replaceFragment(ServiceDetailFragment(), addToBackStack = true)
     }
 }

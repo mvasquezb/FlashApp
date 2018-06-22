@@ -7,7 +7,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.oligark.flashapp"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -55,6 +55,7 @@ dependencies {
     implementation 'jp.wasabeef:blurry:2.0.2'
     implementation 'com.github.aakira:expandable-layout:1.6.0@aar'
 
+    implementation 'com.android.support:support-v4:26.1.0'
     testImplementation "junit:junit:4.12"
 
     androidTestImplementation "com.android.support.test:runner:1.0.2"

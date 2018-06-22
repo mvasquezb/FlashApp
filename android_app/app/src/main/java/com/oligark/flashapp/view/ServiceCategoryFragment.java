@@ -1,7 +1,5 @@
 package com.oligark.flashapp.view;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oligark.flashapp.R;
-import com.oligark.flashapp.model.CategoryService;
+import com.oligark.flashapp.model.ServiceCategory;
 import com.oligark.flashapp.view.adapter.CategoryAdapter;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class ServiceCategoryFragment extends Fragment {
     private String mParam2;
 
     private  LinearLayoutManager layoutManager;
-    private  ArrayList<CategoryService> categories;
+    private  ArrayList<ServiceCategory> categories;
     private  CategoryAdapter categoryAdapter;
     private RecyclerView recyclerView;
 
@@ -55,10 +53,10 @@ public class ServiceCategoryFragment extends Fragment {
         rv.setHasFixedSize(true);
 
         categories = new ArrayList<>();
-        categories.add(new CategoryService("Bano", "Bano",1 )  );
-        categories.add(new CategoryService("Paseo", "Paseo", 2)  );
-        categories.add(new CategoryService("Peluqueria", "Peluqueria", 3)  );
-        categories.add(new CategoryService("Otros", "Otros" , 4)  );
+        categories.add(new ServiceCategory("Bano", "Bano",1 )  );
+        categories.add(new ServiceCategory("Paseo", "Paseo", 2)  );
+        categories.add(new ServiceCategory("Peluqueria", "Peluqueria", 3)  );
+        categories.add(new ServiceCategory("Otros", "Otros" , 4)  );
 
         CategoryAdapter adapter = new CategoryAdapter(categories);
         rv.setAdapter(adapter);

@@ -1,8 +1,8 @@
 package com.oligark.flashapp.view.adapter;
 
+import android.util.Log;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +13,18 @@ import com.oligark.flashapp.model.ServiceCategory;
 
 import java.util.ArrayList;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHolder> {
+public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.MyHolder> {
     private ArrayList<ServiceCategory> categories;
 
 
-    public CategoryAdapter(ArrayList<ServiceCategory> categories){
+    public HistoryUserAdapter(ArrayList<ServiceCategory> categories) {
         this.categories = categories;
     }
 
-    public  static class MyHolder extends RecyclerView.ViewHolder {
+    public static class MyHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public CardView mCardView;
+
         public MyHolder(View itemView) {
             super(itemView);
 
@@ -33,9 +34,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     }
 
 
-
     @Override
-    public CategoryAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HistoryUserAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_items, parent, false);

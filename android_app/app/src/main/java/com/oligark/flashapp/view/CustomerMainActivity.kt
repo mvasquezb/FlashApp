@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityCustomerMainBinding
 
@@ -20,6 +21,8 @@ class CustomerMainActivity : AppCompatActivity(),
     private lateinit var binding: ActivityCustomerMainBinding
     var fragment: Fragment? = null
     var fm = supportFragmentManager
+
+    private lateinit var currentProfileImg: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +39,15 @@ class CustomerMainActivity : AppCompatActivity(),
                 R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
+        val header = binding.navView.getHeaderView(0)
+        currentProfileImg = header.findViewById(R.id.user_img)
+        currentProfileImg.setOnClickListener { showProfile() }
         binding.navView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun showProfile() {
+        replaceFragment(UserProfileFragment(), addToBackStack = true)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     override fun onBackPressed() {
@@ -57,7 +67,7 @@ class CustomerMainActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // as you specify a parent context in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_settings -> return true
             else -> return super.onOptionsItemSelected(item)

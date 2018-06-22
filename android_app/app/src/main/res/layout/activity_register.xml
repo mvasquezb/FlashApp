@@ -14,14 +14,41 @@
         android:orientation="vertical"
         android:background="@drawable/bg_gradient">
 
+
+    <LinearLayout
+        android:id="@+id/signup_form"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="24dp"
+        android:paddingTop="40dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="1dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Selecciona Imagen" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/iv" />
+    </LinearLayout>
+
         <LinearLayout
-            android:id="@+id/signup_form"
+            android:id="@+id/register_form"
             android:layout_width="match_parent"
-            android:layout_height="510dp"
+            android:layout_height="450dp"
             android:orientation="vertical"
             android:paddingLeft="30dp"
-            android:paddingRight="24dp"
-            android:paddingTop="180dp">
+            android:paddingRight="24dp">
+
 
 
         <android.support.design.widget.TextInputLayout

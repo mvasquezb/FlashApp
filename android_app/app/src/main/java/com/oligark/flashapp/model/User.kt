@@ -1,11 +1,13 @@
 package com.oligark.flashapp.model
 
+import java.util.Date
+
 data class User(
         val id:Long?=null,
         val firstName: String?=null,
         val firstSurname: String?=null,
         val secondSurname: String?=null,
-        val age: Int?=null,
+        val birthday: Date?=null,
         val address: String?=null,
         val email: String?=null,
         val imgUrl: String?=null,

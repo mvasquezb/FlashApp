@@ -1,6 +1,8 @@
 package com.oligark.flashapp.view;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +13,10 @@ import android.view.ViewGroup;
 import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.ServiceCategory;
 import com.oligark.flashapp.view.adapter.CategoryAdapter;
+import com.oligark.flashapp.viewmodel.ServiceCategoryViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ServiceCategoryFragment extends Fragment {
@@ -26,9 +30,10 @@ public class ServiceCategoryFragment extends Fragment {
     private String mParam2;
 
     private  LinearLayoutManager layoutManager;
-    private  ArrayList<ServiceCategory> categories;
+    private List<ServiceCategory> categories;
+    private ServiceCategoryViewModel viewModel;
     private  CategoryAdapter categoryAdapter;
-    private RecyclerView recyclerView;
+    private RecyclerView rv;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -49,18 +54,18 @@ public class ServiceCategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        rv = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         rv.setHasFixedSize(true);
 
-        categories = new ArrayList<>();
-        categories.add(new ServiceCategory("Bano", "Bano",1 )  );
-        categories.add(new ServiceCategory("Paseo", "Paseo", 2)  );
-        categories.add(new ServiceCategory("Peluqueria", "Peluqueria", 3)  );
-        categories.add(new ServiceCategory("Otros", "Otros" , 4)  );
-
-        CategoryAdapter adapter = new CategoryAdapter(categories);
-        rv.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+
+        viewModel.getCategoryList().observe(this, new Observer<List<ServiceCategory>>() {
+            @Override
+            public void onChanged(@Nullable List<ServiceCategory> pets) {
+                categoryAdapter = new CategoryAdapter(pets);
+                rv.setAdapter(categoryAdapter);
+            }
+        });
         rv.setLayoutManager(llm);
 
         return rootView;

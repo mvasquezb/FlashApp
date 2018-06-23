@@ -2,6 +2,7 @@ package com.oligark.flashapp.di
 
 import com.google.gson.GsonBuilder
 import com.oligark.flashapp.service.api.BaseApi
+import com.oligark.flashapp.service.api.ServiceService
 import com.oligark.flashapp.service.api.UserService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,4 +16,5 @@ object Dependencies {
             .build()
 
     var userService = retrofit.create(UserService::class.java)
+    var serviceService = retrofit.create(ServiceService::class.java)
 }

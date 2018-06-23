@@ -8,12 +8,11 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ServiceService {
-//    @POST("login")
-//    fun loginUser(@Body body: LoginRequest): Call<LoginResponse>
 
     @GET("services")
     fun findAll(): Call<List<Service>>
 
-//    @GET("users/{id}")
-//    fun findById(id: Int): Call<User?>
+    @GET("services/{id}")
+    fun findAll( id: Int): Call<List<Service>>
+
 }

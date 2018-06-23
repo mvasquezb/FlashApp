@@ -12,12 +12,13 @@ import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.ServiceCategory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHolder> {
-    private ArrayList<ServiceCategory> categories;
+    private List<ServiceCategory> categories;
 
 
-    public CategoryAdapter(ArrayList<ServiceCategory> categories){
+    public CategoryAdapter(List<ServiceCategory> categories){
         this.categories = categories;
     }
 

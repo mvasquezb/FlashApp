@@ -39,25 +39,31 @@ class User {
 
 class RegisterActivity : AppCompatActivity() {
 
-    private var btn: Button? = null
+    //private var btn: Button? = null
     private var reg_user: Button? =null
     private var imageview: ImageView? = null
-    private val GALLERY = 1
-    private val CAMERA = 2
+    private val GALLERY = 0
+    private val CAMERA = 1
     private val user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        btn = findViewById<View>(R.id.btn) as Button
+        //btn = findViewById<View>(R.id.btn) as Button
         reg_user = findViewById<View>(R.id.reg_user) as Button
-        imageview = findViewById<View>(R.id.iv) as ImageView
+        imageview = findViewById<View>(R.id.imuser) as ImageView
 
-        btn!!.setOnClickListener { showPictureDialog() }
+        imageview!!.setOnClickListener {
+            showPictureDialog()
+        }
+
+        //btn!!.setOnClickListener { showPictureDialog() }
 
         reg_user!!.setOnClickListener { registerUser() }
     }
+
+
 
     private fun registerUser() {
         val textname = findViewById<View>(R.id.nombre) as TextView
@@ -80,10 +86,11 @@ class RegisterActivity : AppCompatActivity() {
                 object: Response.Listener<String> {
                     override fun onResponse(response:String) {
                         // response
-                        val alertDialog = AlertDialog.Builder(this@RegisterActivity).create()
-                        alertDialog.setTitle("MSG")
-                        alertDialog.setMessage(response)
-                        alertDialog.show()
+                        //val alertDialog = AlertDialog.Builder(this@RegisterActivity).create()
+                        //alertDialog.setTitle("MSG")
+                        //alertDialog.setMessage(response)
+                        //alertDialog.show()
+                        Toast.makeText(this@RegisterActivity, "Usuario Creado!", Toast.LENGTH_SHORT).show()
                     }
                 },
                 object:Response.ErrorListener {
@@ -107,6 +114,10 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         mRequestQueue.add(postRequest)
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
@@ -114,12 +125,12 @@ class RegisterActivity : AppCompatActivity() {
     private fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(this)
         pictureDialog.setTitle("Opcion")
-        val pictureDialogItems = arrayOf("Selecciona Foto de Galeria")//, "Tomar Foto de Camara")
+        val pictureDialogItems = arrayOf("Selecciona Foto de Galeria", "Tomar Foto de Camara")
         pictureDialog.setItems(pictureDialogItems
         ) { dialog, which ->
             when (which) {
                 0 -> choosePhotoFromGallary()
-                //1 -> takePhotoFromCamera()
+                1 -> takePhotoFromCamera()
             }
         }
         pictureDialog.show()

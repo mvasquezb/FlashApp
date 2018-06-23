@@ -1,3 +1,5 @@
+
+
 package com.oligark.flashapp.view
 
 import android.arch.lifecycle.Observer
@@ -15,8 +17,6 @@ import com.oligark.flashapp.databinding.ActivityLoginBinding
 import com.oligark.flashapp.viewmodel.LoginViewModel
 import com.oligark.flashapp.R.id.textView
 import android.widget.TextView
-
-
 
 
 

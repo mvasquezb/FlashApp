@@ -16,14 +16,20 @@ import java.util.List;
 
 public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewHolder> {
 
+    private final PetListCallback cb;
     private List<Pet> petList;
 
-    public PetListAdapter(List<Pet> petList) {
+    public PetListAdapter(List<Pet> petList, PetListCallback cb) {
         if (petList == null) {
             this.petList = new ArrayList<>();
         } else {
             this.petList = petList;
         }
+        this.cb = cb;
+    }
+
+    public interface PetListCallback {
+        void petClick(Pet pet);
     }
 
     @Override
@@ -31,7 +37,8 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         return new PetViewHolder(
                 LayoutInflater
                         .from(parent.getContext())
-                        .inflate(R.layout.pet_listapets, parent, false)
+                        .inflate(R.layout.pet_listapets, parent, false),
+                cb
         );
     }
 
@@ -51,9 +58,17 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         private final TextView petBreedView;
         private final TextView petTipoView;
         private final TextView petSexoView;
+        private Pet pet;
 
-        public PetViewHolder(View itemView) {
+        public PetViewHolder(View itemView, PetListCallback cb) {
             super(itemView);
+            final PetListCallback callback = cb;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    callback.petClick(pet);
+                }
+            });
             petImageView = itemView.findViewById(R.id.pet_img);
             petNameView = itemView.findViewById(R.id.pet_name);
             petBreedView = itemView.findViewById(R.id.pet_raza);
@@ -63,6 +78,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         }
 
         public void bind(Pet pet) {
+            this.pet = pet;
             petNameView.setText(pet.getNombre());
             petBreedView.setText(pet.getRaza());
             petTipoView.setText(pet.getAnimal().getDescription());

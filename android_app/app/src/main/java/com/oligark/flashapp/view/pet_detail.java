@@ -3,114 +3,153 @@ package com.oligark.flashapp.view;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.Pet;
 
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link pet_detail.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link pet_detail#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class pet_detail extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
+    Pet pet;
+    TextInputEditText nombre;
+    TextInputEditText tipo;
+    TextInputEditText raza;
+    TextInputEditText sexo;
     public pet_detail() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment pet_detail.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static pet_detail newInstance(String param1, String param2) {
-        pet_detail fragment = new pet_detail();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Pet pet = new Gson().fromJson(this.getArguments().getString("pet"), Pet.class);
-        /*
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        */
-
+        pet = new Gson().fromJson(this.getArguments().getString("pet"), Pet.class);
+        System.out.println(pet.getImageUrl());
+        Button btneditar = (Button) findViewById(R.id.btnpetd_editar);
+        Button btndelete = (Button) findViewById(R.id.btnped_delete)
     }
-
+    */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pet_detail, container, false);
+        pet = new Gson().fromJson(this.getArguments().getString("pet"), Pet.class);
+        View vista = inflater.inflate(R.layout.fragment_pet_detail, container, false);
+        Button btneditar = vista.findViewById(R.id.btnpetd_editar);
+        Button btndelete = vista.findViewById(R.id.btnped_delete);
+        nombre = vista.findViewById(R.id.petd_name);
+        tipo = vista.findViewById(R.id.petd_tipo);
+        raza = vista.findViewById(R.id.petd_raza);
+        sexo = vista.findViewById(R.id.petd_sexo);
+        nombre.setText(pet.getNombre());
+        tipo.setText(pet.getAnimal().getDescription());
+        raza.setText(pet.getRaza());
+        sexo.setText(pet.getSexo());
+        btndelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+            }
+        });
+
+        btneditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update();
+            }
+        });
+        return vista;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void update(){
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        //String url = "http://httpbin.org/post";
+        String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/update";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("MSG");
+                        alertDialog.setMessage(response);
+                        alertDialog.show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("ALERT");
+                        alertDialog.setMessage(error.getMessage());
+                        alertDialog.show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+
+                params.put("name", nombre.getText().toString());
+                params.put("gender", sexo.getText().toString());
+                params.put("breed", raza.getText().toString());
+                params.put("tipo", tipo.getText().toString());
+                params.put("id", String.valueOf(pet.getId()));
+                return params;
+            }
+        };
+        mRequestQueue.add(postRequest);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    private void delete(){
+        String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/delete/" + pet.getId();
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        StringRequest sStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try
+                {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage(response);
+                    alertDialog.show();
+                }
+                catch (Exception e){
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage(e.toString());
+                    alertDialog.show();
+                }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage(error.toString());
+                alertDialog.show();
+            }
+        });
+        mRequestQueue.add(sStringRequest);
     }
 }

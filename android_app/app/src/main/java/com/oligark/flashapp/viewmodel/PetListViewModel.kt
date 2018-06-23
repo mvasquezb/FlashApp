@@ -62,10 +62,13 @@ class PetListViewModel(application: Application) : AndroidViewModel(application)
             }
         }, object : Response.ErrorListener {
             override fun onErrorResponse(error: VolleyError) {
+                /*
                 val alertDialog = AlertDialog.Builder(this@PetListViewModel.getApplication()).create()
                 alertDialog.setTitle("Alert")
                 alertDialog.setMessage(error.toString())
                 alertDialog.show()
+                */
+                println(error.toString())
             }
         })
         mRequestQueue.add(sStringRequest)

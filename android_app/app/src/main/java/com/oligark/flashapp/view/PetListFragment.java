@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.Pet;
 import com.oligark.flashapp.view.adapter.PetListAdapter;
@@ -39,7 +40,7 @@ public class PetListFragment extends Fragment implements PetListAdapter.PetListC
     public void petClick(Pet pet) {
         pet_detail detail = new pet_detail();
         Bundle data = new Bundle();
-        data.putString("pet",pet.toString());
+        data.putString("pet",new Gson().toJson(pet));
         detail.setArguments(data);
         ((CustomerMainActivity) getActivity()).replaceFragment(detail, true);
     }

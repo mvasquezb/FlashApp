@@ -1,5 +1,4 @@
 
-
 package com.oligark.flashapp.model
 
 import java.util.*

@@ -99,7 +99,7 @@ class CustomerMainActivity : AppCompatActivity(),
         return true
     }
 
-    private fun replaceFragment(fragment: Fragment,
+    fun replaceFragment(fragment: Fragment,
                                 addToBackStack: Boolean = false) {
         supportFragmentManager.beginTransaction().apply {
 

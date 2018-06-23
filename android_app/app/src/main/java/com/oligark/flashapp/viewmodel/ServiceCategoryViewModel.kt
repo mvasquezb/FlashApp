@@ -12,4 +12,8 @@ class ServiceCategoryViewModel : ViewModel() {
     init {
 
     }
+    private fun sendRequestAndPrintResponse() {
+
+
+    }
 }

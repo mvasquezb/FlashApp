@@ -6,10 +6,7 @@ import retrofit2.http.GET
 
 interface ServiceCategoryService {
 
-    @GET("services")
+    @GET("service-types")
     fun findAll(): Call<List<ServiceCategory>>
-
-    @GET("services/{id}")
-    fun findAll( id: Int): Call<List<ServiceCategory>>
 
 }

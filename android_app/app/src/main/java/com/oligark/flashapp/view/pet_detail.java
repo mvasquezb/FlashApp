@@ -5,6 +5,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +32,18 @@ import com.google.gson.Gson;
 import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.Pet;
 import com.oligark.flashapp.service.api.BaseApi;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.OkHttpClient;
 
 public class pet_detail extends Fragment {
     Pet pet;
@@ -71,6 +82,7 @@ public class pet_detail extends Fragment {
         tipo.setText(pet.getAnimal().getDescription());
         raza.setText(pet.getRaza());
         sexo.setText(pet.getSexo());
+        Picasso.get().load(pet.getImageUrl()).into(img);
         btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +107,7 @@ public class pet_detail extends Fragment {
         return vista;
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -103,6 +116,7 @@ public class pet_detail extends Fragment {
     }
 
     private void update(){
+        final Bitmap bitmapimg = ((BitmapDrawable)img.getDrawable()).getBitmap();
         RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
         String api = BaseApi.INSTANCE.getApiUrl();
         //String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/update";
@@ -135,11 +149,13 @@ public class pet_detail extends Fragment {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
+                String imageData = imageToString(bitmapimg);
                 params.put("name", nombre.getText().toString());
                 params.put("gender", sexo.getText().toString());
                 params.put("breed", raza.getText().toString());
                 params.put("tipo", tipo.getText().toString());
                 params.put("id", String.valueOf(pet.getId()));
+                params.put("image",imageData);
                 return params;
             }
         };
@@ -160,8 +176,8 @@ public class pet_detail extends Fragment {
                     alertDialog.setTitle("Alert");
                     alertDialog.setMessage(response);
                     alertDialog.show();
-                    Intent mascotas = new Intent(getActivity(),PetListFragment.class);
-                    startActivity(mascotas);
+                    // cb.onDeletePet
+                    getActivity().getSupportFragmentManager().popBackStack();
                 }
                 catch (Exception e){
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
@@ -181,6 +197,14 @@ public class pet_detail extends Fragment {
             }
         });
         mRequestQueue.add(sStringRequest);
+    }
+
+    private String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        byte[] imgageBytes = outputStream.toByteArray();
+        String econdedimage = Base64.encodeToString(imgageBytes, Base64.DEFAULT);
+        return econdedimage;
     }
 
 

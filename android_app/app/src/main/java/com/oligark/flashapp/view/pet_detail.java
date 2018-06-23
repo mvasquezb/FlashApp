@@ -1,8 +1,14 @@
 package com.oligark.flashapp.view;
 
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,10 +28,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.Pet;
+import com.oligark.flashapp.service.api.BaseApi;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class pet_detail extends Fragment {
     Pet pet;
@@ -31,6 +40,7 @@ public class pet_detail extends Fragment {
     TextInputEditText tipo;
     TextInputEditText raza;
     TextInputEditText sexo;
+    ImageView img;
     public pet_detail() {
         // Required empty public constructor
     }
@@ -53,6 +63,7 @@ public class pet_detail extends Fragment {
         Button btneditar = vista.findViewById(R.id.btnpetd_editar);
         Button btndelete = vista.findViewById(R.id.btnped_delete);
         nombre = vista.findViewById(R.id.petd_name);
+        img = vista.findViewById(R.id.petd_img);
         tipo = vista.findViewById(R.id.petd_tipo);
         raza = vista.findViewById(R.id.petd_raza);
         sexo = vista.findViewById(R.id.petd_sexo);
@@ -73,13 +84,29 @@ public class pet_detail extends Fragment {
                 update();
             }
         });
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,0);
+            }
+        });
         return vista;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+        img.setImageBitmap(bitmap);
     }
 
     private void update(){
         RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
-        //String url = "http://httpbin.org/post";
-        String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/update";
+        String api = BaseApi.INSTANCE.getApiUrl();
+        //String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/update";
+        String url = api + "pets/update";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
                 {
@@ -108,7 +135,6 @@ public class pet_detail extends Fragment {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
-
                 params.put("name", nombre.getText().toString());
                 params.put("gender", sexo.getText().toString());
                 params.put("breed", raza.getText().toString());
@@ -121,7 +147,9 @@ public class pet_detail extends Fragment {
     }
 
     private void delete(){
-        String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/delete/" + pet.getId();
+        //String url = "http://10.100.242.60/FlashApp-Backend/public/api/pets/delete/" + pet.getId();
+        String api = BaseApi.INSTANCE.getApiUrl();
+        String url = api + "pets/delete/" + pet.getId();
         RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
         StringRequest sStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -132,6 +160,8 @@ public class pet_detail extends Fragment {
                     alertDialog.setTitle("Alert");
                     alertDialog.setMessage(response);
                     alertDialog.show();
+                    Intent mascotas = new Intent(getActivity(),PetListFragment.class);
+                    startActivity(mascotas);
                 }
                 catch (Exception e){
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
@@ -152,4 +182,7 @@ public class pet_detail extends Fragment {
         });
         mRequestQueue.add(sStringRequest);
     }
+
+
+
 }

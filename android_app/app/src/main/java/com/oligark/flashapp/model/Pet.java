@@ -1,15 +1,23 @@
 package com.oligark.flashapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Pet {
+    @SerializedName("id")
     private int id;
+    @SerializedName("name")
     private String nombre;
-    private String animal;
+    @SerializedName("animal_type")
+    private AnimalType animal;
+    @SerializedName("breed")
     private String raza;
+    @SerializedName("gender")
     private String sexo;
+    @SerializedName("pictureUrl")
     private String imageUrl;
 
 
-    public Pet(String nombre, String animal, String raza, String sexo, String imageUrl) {
+    public Pet(String nombre, AnimalType animal, String raza, String sexo, String imageUrl) {
         this.nombre = nombre;
         this.animal = animal;
         this.raza = raza;
@@ -32,11 +40,11 @@ public class Pet {
         this.nombre = nombre;
     }
 
-    public String getAnimal() {
+    public AnimalType getAnimal() {
         return animal;
     }
 
-    public void setAnimal(String animal) {
+    public void setAnimal(AnimalType animal) {
         this.animal = animal;
     }
 

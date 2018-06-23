@@ -3,6 +3,7 @@ package com.oligark.flashapp.view;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.Pet;
 import com.oligark.flashapp.view.adapter.PetListAdapter;
@@ -20,7 +22,7 @@ import com.oligark.flashapp.viewmodel.PetListViewModel;
 
 import java.util.List;
 
-public class PetListFragment extends Fragment {
+public class PetListFragment extends Fragment implements PetListAdapter.PetListCallback {
     public static final String TAG = PetListFragment.class.getSimpleName();
 
     RecyclerView listaDatos;
@@ -32,6 +34,15 @@ public class PetListFragment extends Fragment {
 
     public PetListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void petClick(Pet pet) {
+        pet_detail detail = new pet_detail();
+        Bundle data = new Bundle();
+        data.putString("pet",new Gson().toJson(pet));
+        detail.setArguments(data);
+        ((CustomerMainActivity) getActivity()).replaceFragment(detail, true);
     }
 
     public interface PetListCallback {
@@ -67,7 +78,7 @@ public class PetListFragment extends Fragment {
         viewModel.getPetList().observe(this, new Observer<List<Pet>>() {
             @Override
             public void onChanged(@Nullable List<Pet> pets) {
-                petListAdapter = new PetListAdapter(pets);
+                petListAdapter = new PetListAdapter(pets, PetListFragment.this);
                 listaDatos.setAdapter(petListAdapter);
             }
         });

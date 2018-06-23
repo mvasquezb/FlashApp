@@ -1,13 +1,14 @@
 package com.oligark.flashapp.model
 
-class User(
-        val firstName: String,
-        val firstSurname: String,
-        val secondSurname: String,
-        val age: Int,
-        val address: String,
-        val email: String,
-        val imgUrl: String,
+data class User(
+        val id:Long?=null,
+        val firstName: String?=null,
+        val firstSurname: String?=null,
+        val secondSurname: String?=null,
+        val age: Int?=null,
+        val address: String?=null,
+        val email: String?=null,
+        val imgUrl: String?=null,
         val sellerDescription: String? = null,
         val sellerRating: Int? = null,
         val customerRating: Int? = null,

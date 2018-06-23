@@ -7,7 +7,7 @@ import com.oligark.flashapp.viewmodel.UserViewModel
 class ViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            val key = "UserProfileViewModel"
+            var key = "UserProfileViewModel"
             if(hashMapViewModel.containsKey(key)){
                 return getViewModel(key) as T
             } else {
@@ -19,7 +19,7 @@ class ViewModelFactory() : ViewModelProvider.Factory {
     }
 
     companion object {
-        val hashMapViewModel = HashMap<String, ViewModel>()
+        var hashMapViewModel = HashMap<String, ViewModel>()
         fun addViewModel(key: String, viewModel: ViewModel){
             hashMapViewModel[key] = viewModel
         }

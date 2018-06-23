@@ -18,7 +18,7 @@ class UserSelectionActivity : AppCompatActivity() {
 
         binding.customerBtn.setOnClickListener { v ->
             // TODO: Save selection to user preferences
-            val intent = Intent(this, CustomerMainActivity::class.java)
+            var intent = Intent(this, CustomerMainActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -26,7 +26,7 @@ class UserSelectionActivity : AppCompatActivity() {
         binding.sitterBtn.setOnClickListener { v ->
             // TODO: Save selection to user preferences
             Toast.makeText(this, getString(R.string.user_option_not_available), Toast.LENGTH_SHORT).show()
-//            val intent = Intent(this, SitterMainActivity::class.java)
+//            var intent = Intent(this, SitterMainActivity::class.java)
 //            startActivity(intent)
 //            finish()
         }

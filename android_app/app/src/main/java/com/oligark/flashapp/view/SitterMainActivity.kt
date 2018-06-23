@@ -20,7 +20,7 @@ class SitterMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sitter_main)
         setSupportActionBar(binding.appBar.toolbar)
 
-        val toggle = ActionBarDrawerToggle(
+        var toggle = ActionBarDrawerToggle(
                 this, binding.drawerLayout, binding.appBar.toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)

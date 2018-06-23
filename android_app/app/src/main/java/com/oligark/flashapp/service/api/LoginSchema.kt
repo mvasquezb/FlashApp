@@ -3,18 +3,18 @@ package com.oligark.flashapp.service.api
 import com.oligark.flashapp.model.User
 
 data class LoginRequestPayload(
-        val email: String? = null,
-        val password: String? = null,
-        val token: String? = null
+        var email: String? = null,
+        var password: String? = null,
+        var token: String? = null
 )
 
 data class LoginRequest(
-        val method: String,
-        val payload: LoginRequestPayload
+        var method: String,
+        var payload: LoginRequestPayload
 )
 
 data class LoginResponse(
-        val code: Int,
-        val message: String? = null,
-        val user: User? = null
+        var code: Int,
+        var message: String? = null,
+        var user: User? = null
 )

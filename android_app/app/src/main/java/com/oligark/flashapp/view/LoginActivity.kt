@@ -17,7 +17,7 @@ import com.oligark.flashapp.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
     companion object {
-        val TAG = LoginActivity::class.simpleName
+        var TAG = LoginActivity::class.simpleName
     }
 
     private lateinit var viewModel: LoginViewModel
@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 LoginViewModel.LoginStatus.SUCCESS -> {
                     Log.d(TAG, "Login success")
-                    val intent = Intent(this, UserSelectionActivity::class.java)
+                    var intent = Intent(this, UserSelectionActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

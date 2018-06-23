@@ -9,27 +9,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.oligark.flashapp.R;
+import com.oligark.flashapp.model.Service;
 import com.oligark.flashapp.model.ServiceCategory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.MyHolder> {
-    private ArrayList<ServiceCategory> categories;
+    private List<Service> services;
 
 
-    public HistoryUserAdapter(ArrayList<ServiceCategory> categories) {
-        this.categories = categories;
+    public HistoryUserAdapter(List<Service> services) {
+        this.services = services;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public TextView txtSeller;
+        public TextView txtDescription;
+        public TextView txtType;
+        public TextView txtDate;
         public CardView mCardView;
 
         public MyHolder(View itemView) {
             super(itemView);
 
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
-            mTextView = (TextView) itemView.findViewById(R.id.textCar);
+            txtSeller = (TextView) itemView.findViewById(R.id.txtSeller);
+            txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
+            txtType = (TextView) itemView.findViewById(R.id.txtDate);
+            txtDate = (TextView) itemView.findViewById(R.id.txtType);
         }
     }
 
@@ -38,7 +46,7 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
     public HistoryUserAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_items, parent, false);
+                .inflate(R.layout.card_item_history_user, parent, false);
         // set the view's size, margins, paddings and layout parameters
         MyHolder vh = new MyHolder(v);
         return vh;
@@ -46,11 +54,13 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
-        holder.mTextView.setText(categories.get(position).getName());
+        holder.txtType.setText(services.get(position).getServiceSchedule().getType().getName());
+        holder.txtDescription.setText(services.get(position).getServiceSchedule().getDescription());
+        holder.txtSeller.setText(services.get(position).getServiceSchedule().getSeller().toString());
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentValue = categories.get(position).getName();
+                String currentValue = services.get(position).getServiceSchedule().getDescription();
                 Log.d("CardView", "CardView Clicked: " + currentValue);
             }
         });
@@ -58,7 +68,7 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return services.size();
     }
 
 

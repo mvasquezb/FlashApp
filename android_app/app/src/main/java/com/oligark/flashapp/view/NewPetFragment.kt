@@ -9,14 +9,14 @@ import com.oligark.flashapp.R
 
 class NewPetFragment : Fragment() {
     companion object {
-        val TAG = NewPetFragment::class.java.simpleName
+        var TAG = NewPetFragment::class.java.simpleName
     }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val rootView = inflater.inflate(R.layout.fragment_new_pet, container, false)
+        var rootView = inflater.inflate(R.layout.fragment_new_pet, container, false)
 
         return rootView
     }

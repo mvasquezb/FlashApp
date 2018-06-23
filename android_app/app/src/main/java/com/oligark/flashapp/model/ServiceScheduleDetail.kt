@@ -4,12 +4,12 @@ import java.time.DayOfWeek
 import java.time.Month
 
 class ServiceScheduleDetail (
-    val id: Long? = null,
-    val maxNumOc: Integer?=null,
-    val dayOfWeek: DayOfWeek?=null,
-    val weekOfMonth: Integer?=null,
-    val month: Month?=null,
-    val ScheduleService : ScheduledService?=null
+    var id: Long? = null,
+    var maxNumOc: Integer?=null,
+    var dayOfWeek: DayOfWeek?=null,
+    var weekOfMonth: Integer?=null,
+    var month: Month?=null,
+    var scheduleServiceSchedule : ServiceSchedule?=null
 
 )
 

@@ -20,7 +20,7 @@ class LoginViewModel : ViewModel() {
 
     var email = ""
     var password = ""
-    val loginStatus = MutableLiveData<LoginStatus>()
+    var loginStatus = MutableLiveData<LoginStatus>()
 
     init {
         loginStatus.value = LoginStatus.NONE

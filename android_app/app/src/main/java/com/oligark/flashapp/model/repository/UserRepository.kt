@@ -12,11 +12,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class UserRepository : IUserRepository {
-    val userService: UserService? = null
+    var userService: UserService? = null
 
     override fun loginUser(method: String, request: LoginRequestPayload): LiveData<User?> {
-        val user = MutableLiveData<User?>()
-        val req = LoginRequest(method, request)
+        var user = MutableLiveData<User?>()
+        var req = LoginRequest(method, request)
         userService?.let{
             it.loginUser(req).enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
@@ -25,7 +25,7 @@ class UserRepository : IUserRepository {
                 }
 
                 override fun onResponse(call: Call<LoginResponse>?, response: Response<LoginResponse>?) {
-                    val res = response?.body()
+                    var res = response?.body()
                     res?.let {
                         when (res.code) {
                             200 -> user.value = res.user!!
@@ -43,7 +43,7 @@ class UserRepository : IUserRepository {
     }
 
     override fun findAll(): LiveData<List<User>> {
-        val userList = MutableLiveData<List<User>>()
+        var userList = MutableLiveData<List<User>>()
         userService?.let {
             it.findAll().enqueue(object : Callback<List<User>> {
                 override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
@@ -60,7 +60,7 @@ class UserRepository : IUserRepository {
     }
 
     override fun findById(id: Int): LiveData<User?> {
-        val user = MutableLiveData<User?>()
+        var user = MutableLiveData<User?>()
         userService?.let {
             it.findById(id).enqueue(object : Callback<User?> {
                 override fun onResponse(call: Call<User?>?, response: Response<User?>?) {

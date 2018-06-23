@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.signinLoading.progressOverlay.visibility = View.GONE
                 }
                 LoginViewModel.LoginStatus.ERROR -> {
-                    Toast.makeText(this, "Ocurrió un error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, viewModel.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "Login error")
                 }
                 LoginViewModel.LoginStatus.SUCCESS -> {

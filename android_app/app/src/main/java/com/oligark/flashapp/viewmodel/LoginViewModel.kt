@@ -1,7 +1,8 @@
 package com.oligark.flashapp.viewmodel
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.oligark.flashapp.R
 import com.oligark.flashapp.di.Dependencies
 import com.oligark.flashapp.model.User
@@ -12,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
     enum class LoginType {
         EMAIL,
         GOOGLE,
@@ -38,24 +39,24 @@ class LoginViewModel : ViewModel() {
     }
 
     fun onLogin(loginType: LoginType) {
-        // TODO: Add corresponding logic for login type
         loginStatus.value = LoginStatus.LOADING
         when (loginType) {
             LoginType.EMAIL -> {
                 if (email.isEmpty() || password.isEmpty()) {
-                    errorMessage = .getString(R.string.email_login_fields_error)
+                    errorMessage = getApplication<Application>().getString(R.string.email_login_fields_error)
                     loginStatus.value = LoginStatus.COMPLETE
                     loginStatus.value = LoginStatus.ERROR
                     return
                 }
                 Dependencies.userService.loginUser(LoginRequest(
-                        loginType.toString(),
+                        loginType.toString().toLowerCase(),
                         LoginRequestPayload(email, password)
                 )).enqueue(object : Callback<LoginResponse> {
                     override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
                         loginStatus.value = LoginStatus.COMPLETE
                         println(t?.localizedMessage)
                         t?.printStackTrace()
+                        errorMessage = "Ocurrió un error"
                         handleLoginError()
                     }
 
@@ -83,6 +84,10 @@ class LoginViewModel : ViewModel() {
         if (response == null || !response.isSuccessful
                 || res == null || res.code != 200) {
             println("Response not successful. Code: ${response?.code()}. Message: ${response?.message()}")
+            when (res?.code) {
+                401 -> "Ha ingresado un usuario y/o contraseña incorrecto"
+                else -> "Ocurrió un error"
+            }
             loginStatus.value = LoginStatus.ERROR
             return
         }

@@ -16,7 +16,7 @@ import com.oligark.flashapp.model.Pet
 import org.json.JSONObject
 import java.util.ArrayList
 import com.google.gson.reflect.TypeToken
-
+import com.oligark.flashapp.service.api.BaseApi
 
 
 class PetListViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,7 +26,10 @@ class PetListViewModel(application: Application) : AndroidViewModel(application)
     }
 
     private fun sendRequestAndPrintResponse() {
-        var url = "http://10.100.242.60/FlashApp-Backend/public/api/users/1/pets"
+        //var url = "http://10.100.242.60/FlashApp-Backend/public/api/users/1/pets"
+        val api = BaseApi.apiUrl
+        //1 es id de user
+        var url = api + "users/1/pets"
         var mRequestQueue = Volley.newRequestQueue(this.getApplication())
         var sStringRequest = StringRequest(Request.Method.GET, url, object : Response.Listener<String> {
             override fun onResponse(response: String) {

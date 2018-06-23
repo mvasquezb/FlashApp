@@ -14,7 +14,17 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.oligark.flashapp.R
+import com.oligark.flashapp.service.api.BaseApi
 import java.util.HashMap
+import android.provider.MediaStore
+import android.os.Environment.getExternalStorageDirectory
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
+import android.widget.ImageView
+import java.io.File
+
 
 class NewPetFragment : Fragment() {
     lateinit var btn_add_pet: Button
@@ -22,7 +32,7 @@ class NewPetFragment : Fragment() {
     lateinit var tipo: TextInputEditText
     lateinit var raza: TextInputEditText
     lateinit var sexo: TextInputEditText
-
+    lateinit var img: ImageView
     companion object {
         val TAG = NewPetFragment::class.java.simpleName
     }
@@ -36,15 +46,27 @@ class NewPetFragment : Fragment() {
         tipo = rootView.findViewById(R.id.petn_tipo) as TextInputEditText
         raza = rootView.findViewById(R.id.petn_raza) as TextInputEditText
         sexo = rootView.findViewById(R.id.petn_sexo) as TextInputEditText
+        img = rootView.findViewById(R.id.petn_img) as ImageView
         // Inflate the layout for this fragment
         btn_add_pet.setOnClickListener { addpet() }
+        img.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, 0)
+        }
         return rootView
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val bitmap = data!!.extras!!.get("data") as Bitmap
+        img.setImageBitmap(bitmap)
     }
 
     private fun addpet() {
         val mRequestQueue = Volley.newRequestQueue(activity)
-        //String url = "http://httpbin.org/post";
-        val url = "http://10.100.242.60/FlashApp-Backend/public/api/pets"
+        val api = BaseApi.apiUrl
+        //val url = "http://10.100.242.60/FlashApp-Backend/public/api/pets"
+        val url = api + "pets"
         val postRequest = object : StringRequest(Request.Method.POST, url,
                 object : Response.Listener<String> {
                     override fun onResponse(response: String) {
@@ -78,4 +100,7 @@ class NewPetFragment : Fragment() {
         }
         mRequestQueue.add(postRequest)
     }
+
+
+
 }

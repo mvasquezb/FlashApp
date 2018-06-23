@@ -7,12 +7,12 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserService {
-    @POST("/login")
+    @POST("login")
     fun loginUser(@Body body: LoginRequest): Call<LoginResponse>
 
-    @GET("/users")
+    @GET("users")
     fun findAll(): Call<List<User>>
 
-    @GET("/users/{id}")
+    @GET("users/{id}")
     fun findById(id: Int): Call<User?>
 }

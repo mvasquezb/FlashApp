@@ -1,12 +1,28 @@
 package com.oligark.flashapp.di
 
+import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.gson.GsonBuilder
+import com.oligark.flashapp.R
 import com.oligark.flashapp.service.api.BaseApi
 import com.oligark.flashapp.service.api.UserService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object Dependencies {
+class Dependencies(context: Context) {
+    companion object {
+        private lateinit var _instance: Dependencies
+        fun getInstance(): Dependencies {
+            return _instance
+        }
+        @Synchronized
+        fun create(context: Context) {
+            _instance = Dependencies(context)
+        }
+    }
+
     val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create()
 
     val retrofit = Retrofit.Builder()
@@ -15,4 +31,23 @@ object Dependencies {
             .build()
 
     val userService = retrofit.create(UserService::class.java)
+
+    private var _googleOptions: GoogleSignInOptions? = null
+    fun googleOptions(context: Context): GoogleSignInOptions {
+        if (_googleOptions == null) {
+            _googleOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .requestIdToken(context.getString(R.string.google_server_id))
+                    .build()
+        }
+        return _googleOptions!!
+    }
+
+    private var _googleSignInClient: GoogleSignInClient? = null
+    fun googleSignInClient(context: Context, gso: GoogleSignInOptions): GoogleSignInClient {
+        if (_googleSignInClient == null) {
+            _googleSignInClient = GoogleSignIn.getClient(context, gso)
+        }
+        return _googleSignInClient!!
+    }
 }

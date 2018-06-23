@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.currentUser.observe(this, Observer { user ->
             getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE).edit()
-                    .putString("userJson", Dependencies.gson.toJson(user))
+                    .putString("userJson", Dependencies.getInstance().gson.toJson(user))
                     .apply()
         })
 

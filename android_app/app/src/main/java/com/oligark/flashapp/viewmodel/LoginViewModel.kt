@@ -3,6 +3,7 @@ package com.oligark.flashapp.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.oligark.flashapp.R
 import com.oligark.flashapp.di.Dependencies
 import com.oligark.flashapp.model.User
@@ -48,7 +49,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     loginStatus.value = LoginStatus.ERROR
                     return
                 }
-                Dependencies.userService.loginUser(LoginRequest(
+                Dependencies.getInstance().userService.loginUser(LoginRequest(
                         loginType.toString().toLowerCase(),
                         LoginRequestPayload(email, password)
                 )).enqueue(object : Callback<LoginResponse> {
@@ -72,11 +73,14 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 loginStatus.value = LoginStatus.SUCCESS
             }
             LoginType.GOOGLE -> {
-                // TODO: Google login
-                loginStatus.value = LoginStatus.COMPLETE
-                loginStatus.value = LoginStatus.SUCCESS
+                attemptGoogleSignIn()
             }
         }
+    }
+
+    private fun attemptGoogleSignIn() {
+        loginStatus.value = LoginStatus.COMPLETE
+        loginStatus.value = LoginStatus.SUCCESS
     }
 
     private fun handleLoginSuccess(response: Response<LoginResponse>?) {

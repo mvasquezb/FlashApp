@@ -42,9 +42,8 @@ class Dependencies(context: Context) {
     fun googleOptions(context: Context): GoogleSignInOptions {
         if (_googleOptions == null) {
             _googleOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestScopes(Scope(Scopes.PLUS_ME))
                     .requestEmail()
-                    .requestServerAuthCode(context.getString(R.string.google_server_id))
+                    .requestIdToken(context.getString(R.string.google_server_id))
                     .build()
         }
         return _googleOptions!!

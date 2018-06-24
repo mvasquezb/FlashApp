@@ -1,27 +1,28 @@
 package com.oligark.flashapp.view;
 
-        import android.arch.lifecycle.Observer;
-        import android.arch.lifecycle.ViewModelProviders;
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.app.Fragment;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-        import com.oligark.flashapp.R;
-        import com.oligark.flashapp.di.Dependencies;
-        import com.oligark.flashapp.model.Service;
-        import com.oligark.flashapp.view.adapter.ServiceListAdapter;
-        import com.oligark.flashapp.viewmodel.ServiceListViewModel;
-        import java.util.List;
+import com.oligark.flashapp.R;
+import com.oligark.flashapp.di.Dependencies;
+import com.oligark.flashapp.model.Service;
+import com.oligark.flashapp.view.adapter.ServiceListAdapter;
+import com.oligark.flashapp.viewmodel.ServiceListViewModel;
+
+import java.util.List;
 
 
 public class ServiceListFragment extends Fragment implements ServiceListAdapter.ServiceListCallback {
 
-    private  LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private ServiceListViewModel viewModel;
     private ServiceListAdapter serviceListAdapter;
     private RecyclerView rv;
@@ -66,7 +67,7 @@ public class ServiceListFragment extends Fragment implements ServiceListAdapter.
     public void serviceClick(Service service) {
         ServiceDetailFragment serviceDetailFragment = new ServiceDetailFragment();
         Bundle data = new Bundle();
-        data.putString("serviceJson", Dependencies.getInstance().gson.toJson(service));
+        data.putString("serviceJson", Dependencies.getInstance().getGson().toJson(service));
         serviceDetailFragment.setArguments(data);
         ((CustomerMainActivity) getActivity()).replaceFragment(serviceDetailFragment, true);
 

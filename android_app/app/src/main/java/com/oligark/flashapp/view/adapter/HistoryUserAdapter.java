@@ -33,7 +33,7 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
         public MyHolder(View itemView) {
             super(itemView);
 
-            mCardView = (CardView) itemView.findViewById(R.id.card_view);
+            mCardView = (CardView) itemView.findViewById(R.id.card_view_history_user);
             txtSeller = (TextView) itemView.findViewById(R.id.txtSeller);
             txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
             txtType = (TextView) itemView.findViewById(R.id.txtDate);
@@ -56,7 +56,9 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
     public void onBindViewHolder(MyHolder holder, final int position) {
         holder.txtType.setText(services.get(position).getTipoServicio());
         holder.txtDescription.setText(services.get(position).getDescripcion());
-        holder.txtSeller.setText(services.get(position).getVendedor().toString());
+        if (services.get(position).getVendedor() != null) {
+            holder.txtSeller.setText(services.get(position).getVendedor().toString());
+        }
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

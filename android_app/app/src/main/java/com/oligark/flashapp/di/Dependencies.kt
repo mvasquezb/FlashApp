@@ -18,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Dependencies(context: Context) {
     companion object {
         private lateinit var _instance: Dependencies
+        @JvmStatic
         fun getInstance(): Dependencies {
             return _instance
         }

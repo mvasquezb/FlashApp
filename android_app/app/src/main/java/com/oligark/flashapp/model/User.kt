@@ -18,6 +18,6 @@ data class User(
         var fbToken: String? = null
 ) {
     override fun toString(): String {
-        return "$firstName $firstSurname $secondSurname"
+        return "$firstName $lastName"
     }
 }

@@ -5,9 +5,12 @@ package com.oligark.flashapp.model
 import java.util.*
 
 data class Service(
-        val id: Long?=null,
-        val date: Date?=null,
-        val comments: String?=null,
-        val status: ServiceStatus?=null
+        val idVendedor: Long?=null,
+        val tipoServicio: String?=null,
+        val horaInicio: String?=null,
+        val horaFin: String?=null,
+        val fechaInicio: String?=null,
+        val fechaFin: String?=null,
+        val descripcion: String?=null
 ) {
 }

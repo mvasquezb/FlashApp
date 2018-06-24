@@ -17,13 +17,12 @@ import com.oligark.flashapp.R
 import com.oligark.flashapp.service.api.BaseApi
 import java.util.HashMap
 import android.provider.MediaStore
-import android.os.Environment.getExternalStorageDirectory
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Environment
+import android.graphics.drawable.BitmapDrawable
+import android.util.Base64
 import android.widget.ImageView
-import java.io.File
+import java.io.ByteArrayOutputStream
 
 
 class NewPetFragment : Fragment() {
@@ -63,6 +62,7 @@ class NewPetFragment : Fragment() {
     }
 
     private fun addpet() {
+        val bitmapimg = (img.drawable as BitmapDrawable).bitmap
         val mRequestQueue = Volley.newRequestQueue(activity)
         val api = BaseApi.apiUrl
         //val url = "http://10.100.242.60/FlashApp-Backend/public/api/pets"
@@ -89,18 +89,24 @@ class NewPetFragment : Fragment() {
         ) {
             protected override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-
+                val imageData = imageToString(bitmapimg)
                 params["name"] = nombre.getText().toString()
                 params["gender"] = sexo.getText().toString()
                 params["breed"] = raza.getText().toString()
                 params["tipo"] = tipo.getText().toString()
                 params["user_id"] = "1"
+                params["image"] = imageData
                 return params
             }
         }
         mRequestQueue.add(postRequest)
     }
 
-
+    private fun imageToString(bitmap: Bitmap): String {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        val imgageBytes = outputStream.toByteArray()
+        return Base64.encodeToString(imgageBytes, Base64.DEFAULT)
+    }
 
 }

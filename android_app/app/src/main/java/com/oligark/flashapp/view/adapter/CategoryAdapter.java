@@ -1,5 +1,9 @@
 package com.oligark.flashapp.view.adapter;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,10 +20,12 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHolder> {
     private List<ServiceCategory> categories;
+    private Context context;
 
 
-    public CategoryAdapter(List<ServiceCategory> categories){
+    public CategoryAdapter(List<ServiceCategory> categories, Context context){
         this.categories = categories;
+        this.context = context;
     }
 
     public  static class MyHolder extends RecyclerView.ViewHolder {
@@ -53,6 +59,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             public void onClick(View view) {
                 String currentValue = categories.get(position).getName();
                 Log.d("CardView", "CardView Clicked: " + currentValue);
+//
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                Fragment myFragment = new MyFragment();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
+
+
             }
         });
     }

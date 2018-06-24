@@ -62,7 +62,7 @@ public class ServiceCategoryFragment extends Fragment {
         viewModel.getCategoryList().observe(this, new Observer<List<ServiceCategory>>() {
             @Override
             public void onChanged(@Nullable List<ServiceCategory> pets) {
-                categoryAdapter = new CategoryAdapter(pets);
+                categoryAdapter = new CategoryAdapter(pets, getContext());
                 rv.setAdapter(categoryAdapter);
             }
         });

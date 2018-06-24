@@ -1,3 +1,4 @@
+
 package com.oligark.flashapp.view;
 
 import android.arch.lifecycle.Observer;

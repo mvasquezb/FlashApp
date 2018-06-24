@@ -1,11 +1,12 @@
 package com.oligark.flashapp.model
 
+import java.util.Date
+
 data class User(
         var id:Long?=null,
         var firstName: String?=null,
-        var firstSurname: String?=null,
-        var secondSurname: String?=null,
-        var age: Int?=null,
+        var lastName: String?=null,
+        var birthday: Date?=null,
         var address: String?=null,
         var email: String?=null,
         var imgUrl: String?=null,

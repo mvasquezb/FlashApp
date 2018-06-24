@@ -12,38 +12,38 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import com.oligark.flashapp.model.Pet
+import com.oligark.flashapp.model.Service
 import org.json.JSONObject
 import java.util.ArrayList
 import com.google.gson.reflect.TypeToken
-import com.oligark.flashapp.service.api.BaseApi
 
 
-class PetListViewModel(application: Application) : AndroidViewModel(application) {
-    val petList = MutableLiveData<List<Pet>>()
+
+class ServiceListViewModel(application: Application) : AndroidViewModel(application) {
+    val serviceList = MutableLiveData<List<Service>>()
     init {
         sendRequestAndPrintResponse()
     }
 
     private fun sendRequestAndPrintResponse() {
-        //var url = "http://10.100.242.60/FlashApp-Backend/public/api/users/1/pets"
-        val api = BaseApi.apiUrl
-        //1 es id de user
-        var url = api + "users/1/pets"
+        var url = "http://demo6557625.mockable.io/services"
         var mRequestQueue = Volley.newRequestQueue(this.getApplication())
         var sStringRequest = StringRequest(Request.Method.GET, url, object : Response.Listener<String> {
             override fun onResponse(response: String) {
                 try {
-                    val pets = mutableListOf<Pet>()
+                    val services = mutableListOf<Service>()
                     val gson = Gson()
                     val obj = JSONObject(response)
-                    val data = obj.getJSONArray("data")
-                    for (i in 0 until data.length()) {
-                        val petJson = data.get(i).toString()
-                        val pet = gson.fromJson<Pet>(petJson, Pet::class.java)
-                        pets.add(pet)
+                    val listaServicios = obj.getJSONArray("listaServicios")
+                    for (i in 0 until listaServicios.length()) {
+                        val serviceJson = listaServicios.get(i).toString()
+                        val service = gson.fromJson<Service>(serviceJson, Service::class.java)
+                        services.add(service)
                     }
-                    petList.value = pets
+                    serviceList.value = services
+                    println("gg")
+                    println(response)
+                    println("JP es mi gestor")
                     /*
                     int size = data.length();
                     int i;
@@ -56,10 +56,11 @@ class PetListViewModel(application: Application) : AndroidViewModel(application)
                     }
                     */
                 } catch (e: Exception) {
-                    val alertDialog = AlertDialog.Builder(this@PetListViewModel.getApplication()).create()
-                    alertDialog.setTitle("Alert")
-                    alertDialog.setMessage(e.toString())
-                    alertDialog.show()
+                    //val alertDialog = AlertDialog.Builder(this@ServiceListViewModel.getApplication()).create()
+                    //alertDialog.setTitle("Alert")
+                    //alertDialog.setMessage(e.toString())
+                    //alertDialog.show()
+                    println(e.toString())
                 }
 
             }

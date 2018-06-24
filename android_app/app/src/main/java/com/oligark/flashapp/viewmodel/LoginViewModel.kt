@@ -76,7 +76,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         if (response == null || !response.isSuccessful
                                 || res == null || res.code != 200) {
                             println("Response not successful. Code: ${response?.code()}. Message: ${response?.message()}")
-                            when (res?.code) {
+                            errorMessage = when (res?.code) {
                                 401 -> "Ha ingresado un usuario y/o contraseña incorrecto"
                                 else -> "Ocurrió un error"
                             }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:fb="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.LoginActivity">
@@ -36,14 +35,6 @@
                 android:paddingTop="36dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp">
-
-                <!--<com.facebook.drawee.view.SimpleDraweeView-->
-                <!--android:id="@+id/app_logo"-->
-                <!--android:layout_width="150dp"-->
-                <!--android:layout_height="150dp"-->
-                <!--fresco:placeholderImage="@drawable/logo"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--fresco:roundAsCircle="true" />-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -88,7 +79,6 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:singleLine="true" />
-
                 </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
@@ -138,6 +128,15 @@
                         android:onClick="@{() -> viewModel.onLogin(LoginType.FB)}"/>
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/register_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:text="@string/register_link_prompt" />
         </LinearLayout>
 
         <RelativeLayout

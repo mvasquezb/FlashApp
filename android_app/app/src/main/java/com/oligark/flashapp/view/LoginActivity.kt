@@ -1,3 +1,5 @@
+
+
 package com.oligark.flashapp.view
 
 import android.arch.lifecycle.Observer
@@ -17,6 +19,10 @@ import com.oligark.flashapp.R
 import com.oligark.flashapp.databinding.ActivityLoginBinding
 import com.oligark.flashapp.di.Dependencies
 import com.oligark.flashapp.viewmodel.LoginViewModel
+import com.oligark.flashapp.R.id.textView
+import android.widget.TextView
+
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -81,9 +87,15 @@ class LoginActivity : AppCompatActivity() {
         })
 
         viewModel.potentialUser.observe(this, Observer { user ->
-            // TODO: redidrect to register activity with user data
-//            val intent = Intent(this, )
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra("userJson", Dependencies.getInstance().gson.toJson(user))
+            startActivity(intent)
         })
+
+        binding.registerLink.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.password.setOnEditorActionListener { v, actionId, event ->
             when (actionId) {

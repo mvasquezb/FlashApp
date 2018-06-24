@@ -33,7 +33,7 @@ class NewPetFragment : Fragment() {
     lateinit var sexo: TextInputEditText
     lateinit var img: ImageView
     companion object {
-        val TAG = NewPetFragment::class.java.simpleName
+        var TAG = NewPetFragment::class.java.simpleName
     }
 
     override fun onCreateView(inflater: LayoutInflater,

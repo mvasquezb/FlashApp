@@ -9,6 +9,8 @@ import com.google.android.gms.common.api.Scope
 import com.google.gson.GsonBuilder
 import com.oligark.flashapp.R
 import com.oligark.flashapp.service.api.BaseApi
+import com.oligark.flashapp.service.api.ServiceCategoryService
+import com.oligark.flashapp.service.api.ServiceService
 import com.oligark.flashapp.service.api.UserService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,11 +29,13 @@ class Dependencies(context: Context) {
 
     val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create()
 
-    val retrofit = Retrofit.Builder()
+    var retrofit = Retrofit.Builder()
             .baseUrl(BaseApi.apiUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+    var serviceService = retrofit.create(ServiceService::class.java)
+    var categoryService = retrofit.create(ServiceCategoryService::class.java)
     val userService = retrofit.create(UserService::class.java)
 
     private var _googleOptions: GoogleSignInOptions? = null

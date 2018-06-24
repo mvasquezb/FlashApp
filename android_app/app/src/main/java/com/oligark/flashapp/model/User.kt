@@ -17,4 +17,7 @@ data class User(
         var googleToken: String? = null,
         var fbToken: String? = null
 ) {
+    override fun toString(): String {
+        return "$firstName $lastName"
+    }
 }

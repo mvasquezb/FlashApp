@@ -3,8 +3,8 @@ package com.oligark.flashapp.model
 import java.util.*
 
 data class ServiceRequest(
-        val id:Long?=null,
-        val date: Date?=null,
-        val comment: String?=null
+        var id:Long?=null,
+        var date: Date?=null,
+        var comment: String?=null
 ) {
 }

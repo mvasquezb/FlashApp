@@ -30,7 +30,7 @@ class CustomerMainActivity : AppCompatActivity(),
 
         replaceFragment(CustomerHomeFragment())
 
-        val toggle = ActionBarDrawerToggle(
+        var toggle = ActionBarDrawerToggle(
                 this,
                 binding.drawerLayout,
                 binding.appBar.toolbar,
@@ -79,7 +79,7 @@ class CustomerMainActivity : AppCompatActivity(),
             }
             R.id.nav_pets -> {
                 replaceFragment(PetListFragment(), addToBackStack = true)
-//                val intent = Intent(this, PetListActivity::class.java)
+//                var intent = Intent(this, PetListActivity::class.java)
 //                startActivity(intent)
             }
             R.id.nav_slideshow -> {

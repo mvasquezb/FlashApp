@@ -5,6 +5,7 @@ package com.oligark.flashapp.model
 import java.util.*
 
 data class Service(
+        val vendedor: User?=null,
         val idVendedor: Long?=null,
         val tipoServicio: String?=null,
         val horaInicio: String?=null,

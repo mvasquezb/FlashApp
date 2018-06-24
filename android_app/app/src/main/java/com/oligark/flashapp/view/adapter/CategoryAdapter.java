@@ -1,5 +1,9 @@
 package com.oligark.flashapp.view.adapter;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,13 +16,16 @@ import com.oligark.flashapp.R;
 import com.oligark.flashapp.model.ServiceCategory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHolder> {
-    private ArrayList<ServiceCategory> categories;
+    private List<ServiceCategory> categories;
+    private Context context;
 
 
-    public CategoryAdapter(ArrayList<ServiceCategory> categories){
+    public CategoryAdapter(List<ServiceCategory> categories, Context context){
         this.categories = categories;
+        this.context = context;
     }
 
     public  static class MyHolder extends RecyclerView.ViewHolder {
@@ -38,11 +45,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     public CategoryAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_items, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        MyHolder vh = new MyHolder(v);
+            .inflate(R.layout.card_items, parent, false);
+    // set the view's size, margins, paddings and layout parameters
+    MyHolder vh = new MyHolder(v);
         return vh;
-    }
+}
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
@@ -52,6 +59,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             public void onClick(View view) {
                 String currentValue = categories.get(position).getName();
                 Log.d("CardView", "CardView Clicked: " + currentValue);
+//
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                Fragment myFragment = new MyFragment();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
+
+
             }
         });
     }

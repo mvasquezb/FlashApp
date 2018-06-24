@@ -4,6 +4,8 @@ package com.oligark.flashapp.view
 
 import android.content.Intent
 import android.app.AlertDialog
+import android.content.Context
+import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
 import android.os.Environment
@@ -20,22 +22,18 @@ import android.widget.Toast
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.oligark.flashapp.databinding.ActivityRegisterBinding
+import com.oligark.flashapp.di.Dependencies
+import com.oligark.flashapp.model.User
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 import kotlin.collections.HashMap
-
-
-class User {
-    var nombre: String = ""
-    var apellido: String = ""
-    var email: String = ""
-    var contraseña: String = ""
-    var direccion: String = ""
-
-}
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -44,11 +42,23 @@ class RegisterActivity : AppCompatActivity() {
     private var imageview: ImageView? = null
     private val GALLERY = 0
     private val CAMERA = 1
-    private val user: User? = null
+    private var user: User? = null
+
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
+
+        val userJson = intent.getStringExtra("userJson")
+        user = Dependencies.getInstance().gson.fromJson(userJson, User::class.java)
+        if (user != null) {
+            binding.nombre.setText(user?.firstName)
+            binding.apellido.setText(user?.firstSurname)
+            binding.email.setText(user?.email)
+            binding.password.setText(user?.password)
+            binding.direccion.setText(user?.address)
+        }
 
         //btn = findViewById<View>(R.id.btn) as Button
         reg_user = findViewById<View>(R.id.reg_user) as Button
@@ -66,17 +76,11 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun registerUser() {
-        val textname = findViewById<View>(R.id.nombre) as TextView
-        val textlastname = findViewById<View>(R.id.apellido) as TextView
-        val textemail = findViewById<View>(R.id.email) as TextView
-        //val textcontrasena = findViewById<View>(R.id.password) as TextView
-        val textdireccion = findViewById<View>(R.id.direccion) as TextView
-
-        val nombre = textname.text.toString()
-        val apellido = textlastname.text.toString()
-        val email = textemail.text.toString()
-        //val contrasena = textcontrasena.text.toString()
-        val direccion = textdireccion.text.toString()
+        val nombre = binding.nombre.text.toString()
+        val apellido = binding.apellido.text.toString()
+        val email = binding.email.text.toString()
+        val contrasena = binding.password.text.toString()
+        val direccion = binding.direccion.text.toString()
 
 
         val mRequestQueue = Volley.newRequestQueue(this)
@@ -85,12 +89,18 @@ class RegisterActivity : AppCompatActivity() {
         val postRequest = object: StringRequest(Request.Method.POST, url,
                 object: Response.Listener<String> {
                     override fun onResponse(response:String) {
+                        val userJson = JSONObject(response)["user"]
                         // response
                         //val alertDialog = AlertDialog.Builder(this@RegisterActivity).create()
                         //alertDialog.setTitle("MSG")
                         //alertDialog.setMessage(response)
                         //alertDialog.show()
                         Toast.makeText(this@RegisterActivity, "Usuario Creado!", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@RegisterActivity, UserSelectionActivity::class.java)
+                        startActivity(intent)
+                        getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE).edit()
+                                .putString("userJson", userJson.toString())
+                                .apply()
                     }
                 },
                 object:Response.ErrorListener {
@@ -110,6 +120,7 @@ class RegisterActivity : AppCompatActivity() {
                 params["birthday"] = "1981-02-25"
                 params["address"] = direccion
                 params["email"] = email
+                params["password"] = contrasena
                 return params
             }
         }
@@ -120,14 +131,11 @@ class RegisterActivity : AppCompatActivity() {
         finish()
     }
 
-
-
     private fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(this)
         pictureDialog.setTitle("Opcion")
         val pictureDialogItems = arrayOf("Selecciona Foto de Galeria", "Tomar Foto de Camara")
-        pictureDialog.setItems(pictureDialogItems
-        ) { dialog, which ->
+        pictureDialog.setItems(pictureDialogItems) { dialog, which ->
             when (which) {
                 0 -> choosePhotoFromGallary()
                 1 -> takePhotoFromCamera()
@@ -202,13 +210,12 @@ class RegisterActivity : AppCompatActivity() {
         try
         {
             Log.d("heel",wallpaperDirectory.toString())
-            val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                    .getTimeInMillis()).toString() + ".jpg"))
+            val f = File(wallpaperDirectory, ((Calendar.getInstance().timeInMillis).toString() + ".jpg"))
             f.createNewFile()
             val fo = FileOutputStream(f)
             fo.write(bytes.toByteArray())
             MediaScannerConnection.scanFile(this,
-                    arrayOf(f.getPath()),
+                    arrayOf(f.path),
                     arrayOf("image/jpeg"), null)
             fo.close()
             Log.d("TAG", "Archivo Guardada::--->" + f.getAbsolutePath())

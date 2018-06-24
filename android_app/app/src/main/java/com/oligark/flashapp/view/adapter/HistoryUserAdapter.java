@@ -54,13 +54,13 @@ public class HistoryUserAdapter extends RecyclerView.Adapter<HistoryUserAdapter.
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
-        holder.txtType.setText(services.get(position).getServiceSchedule().getType().getName());
-        holder.txtDescription.setText(services.get(position).getServiceSchedule().getDescription());
-        holder.txtSeller.setText(services.get(position).getServiceSchedule().getSeller().toString());
+        holder.txtType.setText(services.get(position).getTipoServicio());
+        holder.txtDescription.setText(services.get(position).getDescripcion());
+        holder.txtSeller.setText(services.get(position).getVendedor().toString());
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentValue = services.get(position).getServiceSchedule().getDescription();
+                String currentValue = services.get(position).getDescripcion();
                 Log.d("CardView", "CardView Clicked: " + currentValue);
             }
         });

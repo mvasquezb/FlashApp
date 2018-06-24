@@ -14,7 +14,8 @@ class ServiceCategoryViewModel : ViewModel() {
     var categoryList = MutableLiveData<List<ServiceCategory>>()
 
     init {
-        Dependencies.categoryService.findAll().enqueue(object : Callback<List<ServiceCategory>> {
+
+        Dependencies.getInstance().categoryService.findAll().enqueue(object : Callback<List<ServiceCategory>> {
             override fun onFailure(call: Call<List<ServiceCategory>>?, t: Throwable?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

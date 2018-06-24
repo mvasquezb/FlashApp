@@ -8,7 +8,10 @@ import retrofit2.http.POST
 
 interface UserService {
     @POST("login")
-    fun loginUser(@Body body: LoginRequest): Call<LoginResponse>
+    fun loginUser(@Body req: LoginRequest): Call<LoginResponse>
+
+    @POST("login/?allow-register")
+    fun loginOrRegister(@Body req: LoginRequest): Call<LoginResponse>
 
     @GET("users")
     fun findAll(): Call<List<User>>

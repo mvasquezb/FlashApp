@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.api.Scope
 import com.google.gson.GsonBuilder
 import com.oligark.flashapp.R
 import com.oligark.flashapp.service.api.BaseApi
@@ -36,17 +38,18 @@ class Dependencies(context: Context) {
     fun googleOptions(context: Context): GoogleSignInOptions {
         if (_googleOptions == null) {
             _googleOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestScopes(Scope(Scopes.PLUS_ME))
                     .requestEmail()
-                    .requestIdToken(context.getString(R.string.google_server_id))
+                    .requestServerAuthCode(context.getString(R.string.google_server_id))
                     .build()
         }
         return _googleOptions!!
     }
 
     private var _googleSignInClient: GoogleSignInClient? = null
-    fun googleSignInClient(context: Context, gso: GoogleSignInOptions): GoogleSignInClient {
+    fun googleSignInClient(context: Context): GoogleSignInClient {
         if (_googleSignInClient == null) {
-            _googleSignInClient = GoogleSignIn.getClient(context, gso)
+            _googleSignInClient = GoogleSignIn.getClient(context, googleOptions(context))
         }
         return _googleSignInClient!!
     }

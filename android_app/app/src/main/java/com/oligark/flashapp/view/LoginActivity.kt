@@ -68,6 +68,23 @@ class LoginActivity : AppCompatActivity() {
                     .apply()
         })
 
+        viewModel.googleSignInProgress.observe(this, Observer { googleSignIn ->
+            Log.d(TAG, "google sign in updated")
+            when (googleSignIn) {
+                true -> {
+                    Log.d(TAG, "Started google sign in")
+                    val intent = viewModel.googleSignInIntent
+                    startActivityForResult(intent, LoginViewModel.RC_GOOGLE_SIGN_IN)
+                }
+                else -> {}
+            }
+        })
+
+        viewModel.potentialUser.observe(this, Observer { user ->
+            // TODO: redidrect to register activity with user data
+//            val intent = Intent(this, )
+        })
+
         binding.password.setOnEditorActionListener { v, actionId, event ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -77,5 +94,10 @@ class LoginActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.onActivityResult(requestCode, resultCode, data)
     }
 }

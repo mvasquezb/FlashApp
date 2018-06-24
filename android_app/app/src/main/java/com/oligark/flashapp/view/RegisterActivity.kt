@@ -17,23 +17,20 @@ import com.oligark.flashapp.R
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.oligark.flashapp.databinding.ActivityRegisterBinding
 import com.oligark.flashapp.di.Dependencies
 import com.oligark.flashapp.model.User
+import com.squareup.picasso.Picasso
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
-import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -54,10 +51,11 @@ class RegisterActivity : AppCompatActivity() {
         user = Dependencies.getInstance().gson.fromJson(userJson, User::class.java)
         if (user != null) {
             binding.nombre.setText(user?.firstName)
-            binding.apellido.setText(user?.firstSurname)
+            binding.apellido.setText(user?.lastName)
             binding.email.setText(user?.email)
             binding.password.setText(user?.password)
             binding.direccion.setText(user?.address)
+            Picasso.get().load(user?.imgUrl).into(binding.imuser)
         }
 
         //btn = findViewById<View>(R.id.btn) as Button
@@ -76,11 +74,14 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun registerUser() {
-        val nombre = binding.nombre.text.toString()
-        val apellido = binding.apellido.text.toString()
-        val email = binding.email.text.toString()
-        val contrasena = binding.password.text.toString()
-        val direccion = binding.direccion.text.toString()
+        user?.apply {
+            firstName = binding.nombre.text.toString()
+            lastName = binding.apellido.text.toString()
+            email = binding.email.text.toString()
+            password = binding.password.text.toString()
+            address = binding.direccion.text.toString()
+            birthday = Date(1995, 28, 3)
+        }
 
 
         val mRequestQueue = Volley.newRequestQueue(this)
@@ -89,18 +90,34 @@ class RegisterActivity : AppCompatActivity() {
         val postRequest = object: StringRequest(Request.Method.POST, url,
                 object: Response.Listener<String> {
                     override fun onResponse(response:String) {
-                        val userJson = JSONObject(response)["user"]
+                        println(response)
+                        val res = JSONObject(response)
+                        val resCode = res.get("code") as Int
+                        when (resCode) {
+                            401 -> {
+                                Toast.makeText(
+                                        this@RegisterActivity,
+                                        "Ya existe un usuario con ese correo",
+                                        Toast.LENGTH_SHORT).show()
+                            }
+                            200 -> {
+                                val userJson = res["user"]
+                                Toast.makeText(
+                                        this@RegisterActivity,
+                                        "Usuario Registrado",
+                                        Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@RegisterActivity, UserSelectionActivity::class.java)
+                                startActivity(intent)
+                                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE).edit()
+                                        .putString("userJson", userJson.toString())
+                                        .apply()
+                            }
+                        }
                         // response
                         //val alertDialog = AlertDialog.Builder(this@RegisterActivity).create()
                         //alertDialog.setTitle("MSG")
                         //alertDialog.setMessage(response)
                         //alertDialog.show()
-                        Toast.makeText(this@RegisterActivity, "Usuario Creado!", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@RegisterActivity, UserSelectionActivity::class.java)
-                        startActivity(intent)
-                        getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE).edit()
-                                .putString("userJson", userJson.toString())
-                                .apply()
                     }
                 },
                 object:Response.ErrorListener {
@@ -113,15 +130,14 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
         ) {
-            override fun getParams():Map<String, String> {
-                val params = HashMap<String, String> ()
-                params["firstName"] = nombre
-                params["lastName"] = apellido
-                params["birthday"] = "1981-02-25"
-                params["address"] = direccion
-                params["email"] = email
-                params["password"] = contrasena
-                return params
+            override fun getBody(): ByteArray {
+                return Dependencies.getInstance().gson.toJson(user).toByteArray()
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                return mutableMapOf(
+                        "Content-Type" to "application/json; charset=utf-8"
+                )
             }
         }
         mRequestQueue.add(postRequest)

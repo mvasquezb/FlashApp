@@ -54,38 +54,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         loginStatus.value = LoginStatus.LOADING
         when (loginType) {
             LoginType.EMAIL -> {
-                if (email.isEmpty() || password.isEmpty()) {
-                    errorMessage = getApplication<Application>().getString(R.string.email_login_fields_error)
-                    loginStatus.value = LoginStatus.COMPLETE
-                    loginStatus.value = LoginStatus.ERROR
-                    return
-                }
-                Dependencies.getInstance().userService.loginUser(LoginRequest(
-                        loginType.toString().toLowerCase(),
-                        LoginRequestPayload(email, password)
-                )).enqueue(object : Callback<LoginResponse> {
-                    override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
-                        println(t?.localizedMessage)
-                        t?.printStackTrace()
-                        errorMessage = "Ocurrió un error"
-                        handleLoginError()
-                    }
-
-                    override fun onResponse(call: Call<LoginResponse>?, response: Response<LoginResponse>?) {
-                        val res = response?.body()
-                        if (response == null || !response.isSuccessful
-                                || res == null || res.code != 200) {
-                            println("Response not successful. Code: ${response?.code()}. Message: ${response?.message()}")
-                            errorMessage = when (res?.code) {
-                                401 -> "Ha ingresado un usuario y/o contraseña incorrecto"
-                                else -> "Ocurrió un error"
-                            }
-                            loginStatus.value = LoginStatus.ERROR
-                            return
-                        }
-                        handleLoginSuccess(res.user!!)
-                    }
-                })
+                emailLogin()
             }
             LoginType.FB -> {
                 // TODO: FB login
@@ -96,6 +65,41 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 googleSignInProgress.value = true
             }
         }
+    }
+
+    private fun emailLogin() {
+        if (email.isEmpty() || password.isEmpty()) {
+            errorMessage = getApplication<Application>().getString(R.string.email_login_fields_error)
+            loginStatus.value = LoginStatus.COMPLETE
+            loginStatus.value = LoginStatus.ERROR
+            return
+        }
+        Dependencies.getInstance().userService.loginUser(LoginRequest(
+                LoginType.EMAIL.toString().toLowerCase(),
+                LoginRequestPayload(email, password)
+        )).enqueue(object : Callback<LoginResponse> {
+            override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+                println(t?.localizedMessage)
+                t?.printStackTrace()
+                errorMessage = "Ocurrió un error"
+                handleLoginError()
+            }
+
+            override fun onResponse(call: Call<LoginResponse>?, response: Response<LoginResponse>?) {
+                val res = response?.body()
+                if (response == null || !response.isSuccessful
+                        || res == null || res.code != 200) {
+                    println("Response not successful. Code: ${response?.code()}. Message: ${response?.message()}")
+                    errorMessage = when (res?.code) {
+                        401 -> "Ha ingresado un usuario y/o contraseña incorrecto"
+                        else -> "Ocurrió un error"
+                    }
+                    loginStatus.value = LoginStatus.ERROR
+                    return
+                }
+                handleLoginSuccess(res.user!!)
+            }
+        })
     }
 
     private fun handleLoginSuccess(user: User) {
@@ -127,11 +131,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             val account = task.getResult(ApiException::class.java)
             val user = User(
                     firstName = account.givenName,
-                    firstSurname = account.familyName,
+                    lastName = account.familyName,
                     email = account.email,
                     imgUrl = account.photoUrl.toString(),
                     googleToken = account.serverAuthCode
             )
+            println(user.googleToken)
             Dependencies.getInstance().userService.loginUser(LoginRequest(
                     LoginType.GOOGLE.toString().toLowerCase(),
                     LoginRequestPayload(email = account.email, token = account.serverAuthCode)
@@ -149,11 +154,16 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     val res = response?.body()
                     if (response == null || !response.isSuccessful
                             || res == null || res.code != 200) {
-                        println("Response not successful. Code: ${response?.code()}. Message: ${response?.message()}")
-                        when (res?.code) {
-                            401 -> redirectToSignup(user)
+                        println("Code: ${response?.code()}. Message: ${response?.message()}")
+                        println("Code: ${res?.code}. Message: ${res?.message}")
+                        errorMessage = when (res?.code) {
+                            401 -> {
+                                setSignupUser(user)
+                                "Cree un usuario para asociarlo a su cuenta de Google"
+                            }
                             else -> "Ocurrió un error"
                         }
+                        println(errorMessage)
                         loginStatus.value = LoginStatus.ERROR
                         return
                     }
@@ -168,11 +178,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             System.err.println("${ex.localizedMessage} - ${ex.statusCode}")
             ex.printStackTrace()
         }
-        loginStatus.value = LoginStatus.COMPLETE
-        loginStatus.value = LoginStatus.SUCCESS
     }
 
-    private fun redirectToSignup(user: User) {
+    private fun setSignupUser(user: User) {
         potentialUser.value = user
     }
 }

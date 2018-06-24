@@ -1,6 +1,7 @@
 package com.oligark.flashapp.view;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,6 @@ public class ServiceCategoryFragment extends Fragment {
     private String mParam2;
 
     private  LinearLayoutManager layoutManager;
-    private List<ServiceCategory> categories;
     private ServiceCategoryViewModel viewModel;
     private  CategoryAdapter categoryAdapter;
     private RecyclerView rv;
@@ -45,7 +45,7 @@ public class ServiceCategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        viewModel = ViewModelProviders.of(this).get(ServiceCategoryViewModel.class);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ServiceCategoryFragment extends Fragment {
         rv = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         rv.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        layoutManager = new LinearLayoutManager(getActivity());
 
         viewModel.getCategoryList().observe(this, new Observer<List<ServiceCategory>>() {
             @Override
@@ -66,7 +66,7 @@ public class ServiceCategoryFragment extends Fragment {
                 rv.setAdapter(categoryAdapter);
             }
         });
-        rv.setLayoutManager(llm);
+        rv.setLayoutManager(layoutManager);
 
         return rootView;
     }

@@ -39,11 +39,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     public CategoryAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_items, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        MyHolder vh = new MyHolder(v);
+            .inflate(R.layout.card_items, parent, false);
+    // set the view's size, margins, paddings and layout parameters
+    MyHolder vh = new MyHolder(v);
         return vh;
-    }
+}
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {

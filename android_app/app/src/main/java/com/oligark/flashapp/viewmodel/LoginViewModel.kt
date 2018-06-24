@@ -86,6 +86,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onResponse(call: Call<LoginResponse>?, response: Response<LoginResponse>?) {
+                loginStatus.value = LoginStatus.COMPLETE
                 val res = response?.body()
                 if (response == null || !response.isSuccessful
                         || res == null || res.code != 200) {
@@ -134,12 +135,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     lastName = account.familyName,
                     email = account.email,
                     imgUrl = account.photoUrl.toString(),
-                    googleToken = account.serverAuthCode
+                    googleToken = account.idToken
             )
             println(user.googleToken)
             Dependencies.getInstance().userService.loginUser(LoginRequest(
                     LoginType.GOOGLE.toString().toLowerCase(),
-                    LoginRequestPayload(email = account.email, token = account.serverAuthCode)
+                    LoginRequestPayload(email = account.email, token = account.idToken)
             )).enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
                     loginStatus.value = LoginStatus.COMPLETE
